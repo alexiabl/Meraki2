@@ -1,5 +1,6 @@
 package automatas.meraki.analisisSemantico;
 
+import automatas.meraki.Token;
 import automatas.meraki.analisisSemantico.Tipos.Tipo;
 
 /**

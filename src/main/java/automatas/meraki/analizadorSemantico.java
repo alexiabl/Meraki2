@@ -8,44 +8,67 @@ import automatas.meraki.analisisSemantico.Operaciones.OperacionMultiplicacion;
 import automatas.meraki.analisisSemantico.Operaciones.OperacionResta;
 import automatas.meraki.analisisSemantico.Operaciones.OperacionSuma;
 import automatas.meraki.analisisSemantico.Tipos.*;
+import automatas.meraki.arbol.Node;
+import com.sun.org.apache.regexp.internal.RE;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by alexiaborchgrevink on 6/13/18.
  */
 public class analizadorSemantico {
 
-    private ArrayList<DeclVar> declaracionesVar;
-    private ArrayList<Asignacion> asignaciones;
-    private ArrayList<Expresion> expresiones;
+    private List<Regla> declaracionesVar;
+    private List<Regla> asignaciones;
+    private List<Regla> funciones;
+    private EstructuraArbol estructuraArbol;
+
+    public analizadorSemantico(EstructuraArbol estructuraArbol) {
+        this.estructuraArbol = estructuraArbol;
+        this.declaracionesVar = estructuraArbol.getDeclaraciones();
+        this.asignaciones = estructuraArbol.getAsignaciones();
+        this.funciones = estructuraArbol.getFunciones();
+    }
 
     public void revisarDeclaraciones() {
+        /*
         for (int i = 0; i < declaracionesVar.size(); i++) {
-            DeclVar var1 = declaracionesVar.get(i);
+            List<Token> tokens = declaracionesVar.get(i).getTokens();
 
             for (int j = i + 1; j < declaracionesVar.size(); j++) {
-                DeclVar var2 = declaracionesVar.get(j);
-                if (var1.getIdentificador().equals(var2.getIdentificador())) {
+                Token var2 = declaracionesVar.get(j);
+                if (var1.getValor().equals(var2.getValor())) {
                     error(TipoError.DECLARACION_VAR_MULTIPLE, var1);
                 }
             }
-        }
+        }*/
     }
 
-    public boolean revisarIdVarExiste(String nombre) {
-        for (DeclVar var : declaracionesVar) {
-            if (var.getIdentificador().equals(nombre)) {
-                return true;
-            }
-        }
-        return false;
+    public void revisarAsignacionesArbol() {
+
     }
 
+
+/*
     public void revisarAsignaciones() {
-        for (Asignacion asign : asignaciones) {
-            Expresion exp = asign.getValor();
-            String id = asign.getIdentificador();
+
+
+               List<Node<Regla>> reglas = this.estructuraArbol.getInDepthTraversal(this.estructuraArbol.getArbol());
+           for (int i=0; i<reglas.size(); i++){
+               Regla reglaActual = reglas.get(i).getLabel();
+               if (reglaActual.getNombre().equals("Asignacion")){
+                   List<Token> tokens = reglaActual.getTokens();
+                   TipoTokenTerminal tipo = (TipoTokenTerminal)tokens.get(0).getTipo();
+                   if (tipo.equals(TipoTokenTerminal.NUMERO)){
+                   }
+               }
+           }
+
+
+        for (Regla asign : this.estructuraArbol.getAsignaciones()) {
+            String id = asign.getNombre();
+
             Tipo tipo = getTipoIdentificador(id);
             if (tipo != null && tipo instanceof NumeroTipo) {
                 if (!(exp instanceof NumEntero || exp instanceof OperacionResta || exp instanceof OperacionMultiplicacion || exp instanceof OperacionDivision || exp instanceof OperacionSuma)) {
@@ -66,13 +89,13 @@ public class analizadorSemantico {
             }
         }
     }
+*/
 
-
-    private Tipo getTipoIdentificador(String name) {
-        for (DeclVar dec : declaracionesVar) {
-            Tipo id = dec.getTipo();
+    private Object getTipoIdentificador(String name) {
+        for (Regla dec : declaracionesVar) {
+            Object id = dec.getNombre();
             if (id.equals(name))
-                return dec.getTipo();
+                return dec.getNombre();
         }
         return null;
     }

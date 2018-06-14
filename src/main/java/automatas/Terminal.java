@@ -14,7 +14,13 @@ public class Terminal implements Token {
     private String valor;
 
     public Terminal(TipoTokenTerminal tipoTokenTerminal, int numLinea, String valor) {
+        this.tipoToken = tipoTokenTerminal;
+        this.numLinea = numLinea;
+        this.valor = valor;
+    }
 
+    public Object getTipo() {
+        return this.tipoToken;
     }
 
     public int getNumLinea() {

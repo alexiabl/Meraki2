@@ -5,14 +5,18 @@ import java.util.List;
 /**
  * Created by alexiaborchgrevink on 6/14/18.
  */
-public class Regla {
+public abstract class Regla {
 
     private List<Token> tokens;
-    private String nombre;
+    private String identificador;
 
     public Regla(String nombre, List<Token> tokens) {
         this.tokens = tokens;
-        this.nombre = nombre;
+        this.identificador = nombre;
+    }
+
+    public Regla() {
+
     }
 
     public List<Token> getTokens() {
@@ -24,10 +28,10 @@ public class Regla {
     }
 
     public String getNombre() {
-        return nombre;
+        return identificador;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.identificador = nombre;
     }
 }

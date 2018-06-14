@@ -18,6 +18,10 @@ public class NoTerminal implements Token {
         this.valor = valor;
     }
 
+    public Object getTipo() {
+        return this.tipoToken;
+    }
+
     public int getNumLinea() {
         return this.numLinea;
     }
