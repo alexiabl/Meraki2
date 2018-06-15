@@ -1,8 +1,5 @@
 package automatas.meraki.analisisSemantico;
 
-import automatas.meraki.Regla;
-import automatas.meraki.Token;
-
 import java.util.List;
 
 /**
@@ -34,5 +31,15 @@ public class Asignacion extends Regla {
 
     public void setValor(Expresion valor) {
         this.valor = valor;
+    }
+
+    @Override
+    public List<Token> getTokens() {
+        return tokens;
+    }
+
+    @Override
+    public void setTokens(List<Token> tokens) {
+        this.tokens = tokens;
     }
 }

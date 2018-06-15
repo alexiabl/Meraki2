@@ -1,21 +1,19 @@
-package automatas.meraki;
+package automatas.meraki.analisisSemantico;
 
-import automatas.TipoTokenNoTerminal;
+import automatas.meraki.analisisSemantico.Tipos.Tipo;
 
 /**
  * Created by alexiaborchgrevink on 6/14/18.
  */
-public class NoTerminal implements Token {
+public class Terminal extends Token {
 
-    private TipoTokenNoTerminal tipoToken;
+    private TipoTokenTerminal tipoToken;
     private int numLinea;
     private int scope;
-    private String valor;
+    private Tipo valor;
 
-    public NoTerminal(TipoTokenNoTerminal tipoTokenTerminal, int numLinea, String valor) {
-        this.tipoToken = tipoTokenTerminal;
-        this.numLinea = numLinea;
-        this.valor = valor;
+    public Terminal(TipoTokenTerminal tipoTokenTerminal, int numLinea, Tipo valor) {
+        super(tipoTokenTerminal, numLinea, valor);
     }
 
     public Object getTipo() {
@@ -38,19 +36,19 @@ public class NoTerminal implements Token {
         this.scope = scope;
     }
 
-    public String getValor() {
+    public Tipo getValor() {
         return this.getValor();
     }
 
-    public void setValor(String valor) {
+    public void setValor(Tipo valor) {
         this.valor = valor;
     }
 
-    public TipoTokenNoTerminal getTipoToken() {
+    public TipoTokenTerminal getTipoToken() {
         return tipoToken;
     }
 
-    public void setTipoToken(TipoTokenNoTerminal tipoToken) {
+    public void setTipoToken(TipoTokenTerminal tipoToken) {
         this.tipoToken = tipoToken;
     }
 }

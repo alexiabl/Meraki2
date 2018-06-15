@@ -7,6 +7,10 @@ public class NumeroTipo implements Tipo {
 
     private static String identificador = "NUMERO";
 
+    public NumeroTipo() {
+
+    }
+
     public String getIdentificador() {
         return this.identificador;
     }

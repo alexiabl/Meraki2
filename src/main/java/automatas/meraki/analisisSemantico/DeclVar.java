@@ -1,27 +1,22 @@
 package automatas.meraki.analisisSemantico;
 
-import automatas.meraki.Token;
 import automatas.meraki.analisisSemantico.Tipos.Tipo;
+
+import java.util.List;
 
 /**
  * Created by alexiaborchgrevink on 6/13/18.
  */
-public class DeclVar {
+public class DeclVar extends Regla {
 
-    private Tipo tipo;
     private String identificador;
+    private Expresion valor;
+    private List<Token> tokens;
 
-    public DeclVar(Tipo tipo, String id) {
-        this.tipo = tipo;
+    public DeclVar(String id, List<Token> tokens) {
         this.identificador = id;
-    }
-
-    public Tipo getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(Tipo tipo) {
-        this.tipo = tipo;
+        this.valor = valor;
+        this.tokens = tokens;
     }
 
     public String getIdentificador() {
@@ -30,5 +25,23 @@ public class DeclVar {
 
     public void setIdentificador(String identificador) {
         this.identificador = identificador;
+    }
+
+    public Expresion getValor() {
+        return valor;
+    }
+
+    public void setValor(Expresion valor) {
+        this.valor = valor;
+    }
+
+    @Override
+    public List<Token> getTokens() {
+        return tokens;
+    }
+
+    @Override
+    public void setTokens(List<Token> tokens) {
+        this.tokens = tokens;
     }
 }

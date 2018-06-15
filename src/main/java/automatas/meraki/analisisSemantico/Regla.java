@@ -1,5 +1,6 @@
-package automatas.meraki;
+package automatas.meraki.analisisSemantico;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public abstract class Regla {
     }
 
     public Regla() {
-
+        tokens = new LinkedList<Token>();
     }
 
     public List<Token> getTokens() {
@@ -27,11 +28,11 @@ public abstract class Regla {
         this.tokens = tokens;
     }
 
-    public String getNombre() {
+    public String getIdentificador() {
         return identificador;
     }
 
-    public void setNombre(String nombre) {
+    public void setIdentificador(String nombre) {
         this.identificador = nombre;
     }
 }

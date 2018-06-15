@@ -1,6 +1,6 @@
 package automatas.meraki;
 
-import automatas.meraki.analisisSemantico.BloqueCodigo;
+import automatas.meraki.analisisSemantico.*;
 import automatas.meraki.arbol.Node;
 import automatas.meraki.arbol.PointerTree;
 import automatas.meraki.arbol.PointerTreeNode;
@@ -17,19 +17,23 @@ public class EstructuraArbol {
     private int scopeCounter;
     private int niveles;
     private TablaSimbolos tablaSimbolos;
+    private TablaSimbolos tablaFunciones;
     private List<Regla> asignaciones;
     private List<Regla> funciones;
     private List<Regla> declaraciones;
 
 
     public EstructuraArbol() {
-        this.scopeCounter = 0;
+        this.scopeCounter = 1;
         Regla regla = new BloqueCodigo("Meraki", new LinkedList<Token>());
         this.arbol = new PointerTree<Regla>(regla);
         this.nodoActual = this.arbol.getRoot();
-        this.scopeCounter++;
-        this.niveles = 0;
+        this.niveles = 1;
         this.tablaSimbolos = new TablaSimbolos();
+        this.tablaFunciones = new TablaSimbolos();
+        this.asignaciones = new LinkedList<Regla>();
+        this.funciones = new LinkedList<Regla>();
+        this.declaraciones = new LinkedList<Regla>();
 
     }
 
@@ -45,10 +49,10 @@ public class EstructuraArbol {
         boolean nuevoNivel = true;
         Regla reglaActual = regla;
         Node<Regla> nodoHijo = this.nodoActual;
-        String tipoRegla = regla.getNombre();
+        String tipoRegla = regla.getIdentificador();
         if (tipoRegla.equals("Asignacion")) {
             for (Token token : regla.getTokens()) {
-                if (token.getTipo().equals(TipoTokenTerminal.N_VAR)) {
+                if (token.getTipoToken().equals(TipoTokenTerminal.N_VAR)) {
                     insertarATabla(token);
                     break;
                 }
@@ -57,7 +61,7 @@ public class EstructuraArbol {
         }
         if (tipoRegla.equals("Declaracion")) {
             for (Token token : regla.getTokens()) {
-                if (token.getTipo().equals(TipoTokenTerminal.N_VAR)) {
+                if (token.getTipoToken().equals(TipoTokenTerminal.N_VAR)) {
                     insertarATabla(token);
                     break;
                 }
@@ -66,8 +70,10 @@ public class EstructuraArbol {
         }
         if (tipoRegla.equals("Funcion")) {
             for (Token token : regla.getTokens()) {
-                if (token.getTipo().equals(TipoTokenTerminal.N_VAR)) {
+                if (token.getTipoToken().equals(TipoTokenTerminal.N_FUNC)) {
                     insertarATabla(token);
+                } else if (token.getTipoToken().equals(TipoTokenTerminal.N_VAR)) {
+
                 }
             }
             this.funciones.add(regla);
@@ -75,7 +81,7 @@ public class EstructuraArbol {
         for (int i = 0; i < regla.getTokens().size(); i++) {
             Token tok = regla.getTokens().get(i);
             Node<Regla> nodo = this.nodoActual;
-            if (tok.getTipo().equals(TipoTokenTerminal.LLAVEI)) {
+            if (tok.getTipoToken().equals(TipoTokenTerminal.LLAVEI)) {
                 this.scopeCounter++;
                 tok.setScope(this.scopeCounter);
                 List<Token> nextTokens = new LinkedList<Token>();
@@ -96,7 +102,7 @@ public class EstructuraArbol {
                 this.nodoActual.addChild(nodoRegla);
                 nodoHijo = nodoRegla;
                 nuevoNivel = false;
-            } else if (tok.getTipo().equals(TipoTokenTerminal.LLAVEF)) {
+            } else if (tok.getTipoToken().equals(TipoTokenTerminal.LLAVEF)) {
                 for (int k = 0; k < this.niveles; k++) {
                     this.nodoActual = this.nodoActual.getParent();
                 }
@@ -110,24 +116,23 @@ public class EstructuraArbol {
 
 
     public void imprimirArbol() {
-        List<Node<Regla>> imprimirArbol = getLevelTraversal(this.arbol);
+        List<Node<Regla>> imprimirArbol = getInDepthTraversal(this.arbol);
         for (int i = 0; i < imprimirArbol.size(); i++) {
-            System.out.println("Regla: " + imprimirArbol.get(i).getLabel().getNombre());
+            System.out.println("Regla: " + imprimirArbol.get(i).getLabel().getIdentificador());
             Node<Regla> current = imprimirArbol.get(i);
             if (current.getChildren().size() > 0) {
                 for (int j = 0; j < current.getChildren().size(); j++) {
-                    System.out.println("Hijo: " + current.getChildren().get(j).getLabel().getNombre());
+                    System.out.println("Hijo: " + current.getChildren().get(j).getLabel().getIdentificador());
                 }
             }
         }
-
     }
 
     public void imprimirTablas() {
         List<Token> tablaAsig = this.tablaSimbolos.getTabla();
         System.out.println("Tabla de Simbolos:");
         for (int i = 0; i < tablaAsig.size(); i++) {
-            System.out.println(" Tipo: " + tablaAsig.get(i).getTipo() + " Valor: " + tablaAsig.get(i).getValor() + " Linea: " + tablaAsig.get(i).getNumLinea());
+            System.out.println(" Tipo: " + tablaAsig.get(i).getTipoToken() + " Valor: " + tablaAsig.get(i).getValor().toString() + " Linea: " + tablaAsig.get(i).getNumLinea());
         }
     }
 

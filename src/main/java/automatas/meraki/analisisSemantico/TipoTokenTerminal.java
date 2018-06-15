@@ -1,4 +1,4 @@
-package automatas.meraki;
+package automatas.meraki.analisisSemantico;
 
 /**
  * Created by alexiaborchgrevink on 6/13/18.
@@ -9,5 +9,5 @@ public enum TipoTokenTerminal {
     O, Y,
     TIPONUM, TIPOCAR, TIPOBOOL, TIPOTEXTO,
     RESTA, SUMA, PUNTOCOMA, MULTIPLICACION, DIVISION,
-    IMPRIMA, PF, PI, DEVUELVA, DESDE, HASTA, LLAVEI, LLAVEF, HAGA, MIENTRAS, SI,
+    IMPRIMA, PF, PI, DEVUELVA, DESDE, HASTA, LLAVEI, LLAVEF, HAGA, MIENTRAS, SI, N_FUNC
 }

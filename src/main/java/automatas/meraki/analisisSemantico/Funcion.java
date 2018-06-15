@@ -1,19 +1,17 @@
 package automatas.meraki.analisisSemantico;
 
-import automatas.meraki.analisisSemantico.Tipos.Tipo;
-
 import java.util.List;
 
 /**
- * Created by alexiaborchgrevink on 6/13/18.
+ * Created by alexiaborchgrevink on 6/14/18.
  */
-public class Indicacion extends Regla {
+public class Funcion extends Regla {
 
     private String identificador;
     private Expresion valor;
     private List<Token> tokens;
 
-    public Indicacion(String id, List<Token> tokens) {
+    public Funcion(String id, List<Token> tokens) {
         this.identificador = id;
         this.valor = valor;
         this.tokens = tokens;
@@ -44,5 +42,4 @@ public class Indicacion extends Regla {
     public void setTokens(List<Token> tokens) {
         this.tokens = tokens;
     }
-
 }

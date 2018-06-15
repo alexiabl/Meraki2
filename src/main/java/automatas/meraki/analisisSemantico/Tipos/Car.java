@@ -3,7 +3,7 @@ package automatas.meraki.analisisSemantico.Tipos;
 /**
  * Created by alexiaborchgrevink on 6/14/18.
  */
-public class Car {
+public class Car extends CaracterTipo {
 
     private char valor;
 
@@ -13,5 +13,9 @@ public class Car {
 
     public char getValor() {
         return valor;
+    }
+
+    public String getIdentificador() {
+        return super.getIdentificador();
     }
 }

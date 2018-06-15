@@ -5,7 +5,7 @@ import automatas.meraki.analisisSemantico.Expresion;
 /**
  * Created by alexiaborchgrevink on 6/14/18.
  */
-public class NumEntero implements Expresion {
+public class NumEntero extends NumeroTipo {
 
     private int valor;
 
@@ -19,5 +19,9 @@ public class NumEntero implements Expresion {
 
     public void setValor(int valor) {
         this.valor = valor;
+    }
+
+    public String getIdentificador() {
+        return super.getIdentificador();
     }
 }

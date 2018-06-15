@@ -1,17 +1,7 @@
-package automatas.meraki;
+package automatas.meraki.analisisSemantico;
 
-import automatas.meraki.analisisSemantico.Asignacion;
-import automatas.meraki.analisisSemantico.DeclVar;
-import automatas.meraki.analisisSemantico.Expresion;
-import automatas.meraki.analisisSemantico.Operaciones.OperacionDivision;
-import automatas.meraki.analisisSemantico.Operaciones.OperacionMultiplicacion;
-import automatas.meraki.analisisSemantico.Operaciones.OperacionResta;
-import automatas.meraki.analisisSemantico.Operaciones.OperacionSuma;
-import automatas.meraki.analisisSemantico.Tipos.*;
-import automatas.meraki.arbol.Node;
-import com.sun.org.apache.regexp.internal.RE;
+import automatas.meraki.EstructuraArbol;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,6 +20,10 @@ public class analizadorSemantico {
         this.asignaciones = estructuraArbol.getAsignaciones();
         this.funciones = estructuraArbol.getFunciones();
     }
+
+    //para las asignaciones reviso el arbol
+    //para las declaraciones reviso tabla de simbolos
+
 
     public void revisarDeclaraciones() {
         /*
@@ -93,9 +87,9 @@ public class analizadorSemantico {
 
     private Object getTipoIdentificador(String name) {
         for (Regla dec : declaracionesVar) {
-            Object id = dec.getNombre();
+            Object id = dec.getIdentificador();
             if (id.equals(name))
-                return dec.getNombre();
+                return dec.getIdentificador();
         }
         return null;
     }

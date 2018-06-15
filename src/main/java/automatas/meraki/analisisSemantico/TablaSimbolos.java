@@ -1,4 +1,4 @@
-package automatas.meraki;
+package automatas.meraki.analisisSemantico;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -8,21 +8,10 @@ import java.util.List;
  */
 public class TablaSimbolos {
 
-    //la idea es cargar la tabla de simbolos por contexto.
-
-    private int idContexto;
     private List<Token> tabla;
 
     public TablaSimbolos() {
         this.tabla = new LinkedList<Token>();
-    }
-
-    public int getIdContexto() {
-        return idContexto;
-    }
-
-    public void setIdContexto(int idContexto) {
-        this.idContexto = idContexto;
     }
 
     public List<Token> getTabla() {
@@ -33,7 +22,4 @@ public class TablaSimbolos {
         this.tabla = tabla;
     }
 
-    public void agregarSimbolo(Token s) {
-        this.tabla.add(s);
-    }
 }
