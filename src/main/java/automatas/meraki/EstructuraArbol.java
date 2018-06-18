@@ -132,7 +132,7 @@ public class EstructuraArbol {
         List<Token> tablaAsig = this.tablaSimbolos.getTabla();
         System.out.println("Tabla de Simbolos:");
         for (int i = 0; i < tablaAsig.size(); i++) {
-            System.out.println(" Tipo: " + tablaAsig.get(i).getTipoToken() + " Valor: " + tablaAsig.get(i).getValor().toString() + " Linea: " + tablaAsig.get(i).getNumLinea());
+            System.out.println(" Tipo: " + tablaAsig.get(i).getTipoToken() + " Valor: " + tablaAsig.get(i).getValor() + " Linea: " + tablaAsig.get(i).getNumLinea());
         }
     }
 

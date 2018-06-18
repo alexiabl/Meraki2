@@ -5,7 +5,7 @@ import automatas.meraki.analisisSemantico.Tipos.Tipo;
 /**
  * Created by alexiaborchgrevink on 6/13/18.
  */
-public abstract class Token {
+public class Token {
     private TipoTokenTerminal tipoToken;
     private int numLinea;
     private int scope;
@@ -38,8 +38,8 @@ public abstract class Token {
         this.scope = scope;
     }
 
-    public Tipo getValor() {
-        return this.getValor();
+    public String getValor() {
+        return this.valor.getIdentificador();
     }
 
     public void setValor(Tipo valor) {

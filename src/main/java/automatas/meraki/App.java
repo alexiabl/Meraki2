@@ -12,10 +12,10 @@ import java.util.List;
 public class App {
     public static void main(String[] args) {
 
-        Token tok1 = new Terminal(TipoTokenTerminal.TIPONUM, 1, new NumeroTipo());
-        Token tok2 = new Terminal(TipoTokenTerminal.N_VAR, 1, new Texto("n"));
-        Token tok3 = new Terminal(TipoTokenTerminal.SIGUAL, 1, new Car('='));
-        Token tok4 = new Terminal(TipoTokenTerminal.NUMERO, 1, new NumEntero(5));
+        Token tok1 = new Token(TipoTokenTerminal.TIPONUM, 1, new NumeroTipo());
+        Token tok2 = new Token(TipoTokenTerminal.N_VAR, 1, new Texto("n"));
+        Token tok3 = new Token(TipoTokenTerminal.SIGUAL, 1, new Car('='));
+        Token tok4 = new Token(TipoTokenTerminal.NUMERO, 1, new NumEntero(5));
         List<Token> tokensAsignacion = new LinkedList<Token>();
         tokensAsignacion.add(tok1);
         tokensAsignacion.add(tok2);
@@ -28,20 +28,20 @@ public class App {
         arbolSemantico.insertItem(asignacion);
 
 
-        Token tok5 = new Terminal(TipoTokenTerminal.TIPONUM, 2, new NumeroTipo());
-        Token tok6 = new Terminal(TipoTokenTerminal.N_FUNC, 2, new Texto("galleta"));
-        Token tok7 = new Terminal(TipoTokenTerminal.PI, 2, new Car('('));
-        Token tok9 = new Terminal(TipoTokenTerminal.TIPONUM, 2, new NumeroTipo());
-        Token tok10 = new Terminal(TipoTokenTerminal.N_VAR, 2, new Texto("param1"));
-        Token tok8 = new Terminal(TipoTokenTerminal.PF, 2, new Car(')'));
-        Token tok11 = new Terminal(TipoTokenTerminal.LLAVEI, 2, new Car('{'));
+        Token tok5 = new Token(TipoTokenTerminal.TIPONUM, 2, new NumeroTipo());
+        Token tok6 = new Token(TipoTokenTerminal.N_FUNC, 2, new Texto("galleta"));
+        Token tok7 = new Token(TipoTokenTerminal.PI, 2, new Car('('));
+        Token tok9 = new Token(TipoTokenTerminal.TIPONUM, 2, new NumeroTipo());
+        Token tok10 = new Token(TipoTokenTerminal.N_VAR, 2, new Texto("param1"));
+        Token tok8 = new Token(TipoTokenTerminal.PF, 2, new Car(')'));
+        Token tok11 = new Token(TipoTokenTerminal.LLAVEI, 2, new Car('{'));
 
-        Token tok12 = new Terminal(TipoTokenTerminal.TIPOTEXTO, 3, new TextoTipo());
-        Token tok13 = new Terminal(TipoTokenTerminal.N_VAR, 3, new Texto("varTipo"));
-        Token tok14 = new Terminal(TipoTokenTerminal.TEXTO, 3, new Texto("hola soy texto"));
-        Token tok15 = new Terminal(TipoTokenTerminal.DEVUELVA, 4, new Texto("devuelva"));
-        Token tok16 = new Terminal(TipoTokenTerminal.N_VAR, 4, new Texto("devuelva"));
-        Token tok17 = new Terminal(TipoTokenTerminal.LLAVEF, 5, new Car('}'));
+        Token tok12 = new Token(TipoTokenTerminal.TIPOTEXTO, 3, new TextoTipo());
+        Token tok13 = new Token(TipoTokenTerminal.N_VAR, 3, new Texto("varTipo"));
+        Token tok14 = new Token(TipoTokenTerminal.TEXTO, 3, new Texto("hola soy texto"));
+        Token tok15 = new Token(TipoTokenTerminal.DEVUELVA, 4, new Texto("devuelva"));
+        Token tok16 = new Token(TipoTokenTerminal.N_VAR, 4, new Texto("devuelva"));
+        Token tok17 = new Token(TipoTokenTerminal.LLAVEF, 5, new Car('}'));
 
         List<Token> tokens = new LinkedList<Token>();
 
