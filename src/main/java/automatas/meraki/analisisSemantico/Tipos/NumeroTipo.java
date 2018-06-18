@@ -14,5 +14,5 @@ public class NumeroTipo implements Tipo {
     public String getIdentificador() {
         return this.identificador;
     }
-
+    public String  getValorR(){return "T";}
 }

@@ -6,6 +6,7 @@ import automatas.meraki.arbol.PointerTree;
 import automatas.meraki.arbol.PointerTreeNode;
 import automatas.meraki.arbol.Tree;
 import com.sun.jmx.remote.internal.ArrayQueue;
+import automatas.meraki.analisisSemantico.Tipos.*;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -51,31 +52,43 @@ public class EstructuraArbol {
         Node<Regla> nodoHijo = this.nodoActual;
         String tipoRegla = regla.getIdentificador();
         if (tipoRegla.equals("Asignacion")) {
-            for (Token token : regla.getTokens()) {
-                if (token.getTipoToken().equals(TipoTokenTerminal.N_VAR)) {
-                    insertarATabla(token);
-                    break;
-                }
-            }
+            //for (Token token : regla.getTokens()) {
+                //if (token.getTipoToken().equals(TipoTokenTerminal.N_VAR)) {
+                    Token toktemp = regla.getTokens().get(1);
+                    toktemp.setTipoToken(regla.getTokens().get(0).getTipoToken());
+                   // Token tok1 = new Token(regla.getTokens().get(0).getTipoToken(),regla.getTokens().get(0).getNumLinea(),new Texto("Temp"));
+                    insertarATabla(toktemp);
+                        //break;
+               // }
+           // }
             this.asignaciones.add(regla);
         }
         if (tipoRegla.equals("Declaracion")) {
-            for (Token token : regla.getTokens()) {
-                if (token.getTipoToken().equals(TipoTokenTerminal.N_VAR)) {
-                    insertarATabla(token);
-                    break;
-                }
-            }
+         //   for (Token token : regla.getTokens()) {
+               // if (token.getTipoToken().equals(TipoTokenTerminal.N_VAR)) {
+            Token toktemp = regla.getTokens().get(1);
+            toktemp.setTipoToken(regla.getTokens().get(0).getTipoToken());
+                    insertarATabla(toktemp);
+                //    break;
+               // }
+            //}
             this.declaraciones.add(regla);
         }
         if (tipoRegla.equals("Funcion")) {
-            for (Token token : regla.getTokens()) {
-                if (token.getTipoToken().equals(TipoTokenTerminal.N_FUNC)) {
-                    insertarATabla(token);
-                } else if (token.getTipoToken().equals(TipoTokenTerminal.N_VAR)) {
+           // for (Token token : regla.getTokens()) {
+            //    if (token.getTipoToken().equals(TipoTokenTerminal.N_FUNC)) {
+                    Token toktemp = regla.getTokens().get(1);
+                    toktemp.setTipoToken(regla.getTokens().get(0).getTipoToken());
+                    toktemp.setNumLineaFinal(regla.getTokens().get(regla.getTokens().size()-1).getNumLinea());
 
-                }
-            }
+                   // System.out.println(regla.getTokens().size()-1);
+                    //System.out.println(regla.getTokens().get(regla.getTokens().size()-1).getNumLinea());
+                    insertarATabla(toktemp);
+
+              //  } else if (token.getTipoToken().equals(TipoTokenTerminal.N_VAR)) {
+
+            //    }
+          //  }
             this.funciones.add(regla);
         }
         for (int i = 0; i < regla.getTokens().size(); i++) {
@@ -131,8 +144,15 @@ public class EstructuraArbol {
     public void imprimirTablas() {
         List<Token> tablaAsig = this.tablaSimbolos.getTabla();
         System.out.println("Tabla de Simbolos:");
-        for (int i = 0; i < tablaAsig.size(); i++) {
-            System.out.println(" Tipo: " + tablaAsig.get(i).getTipoToken() + " Valor: " + tablaAsig.get(i).getValor() + " Linea: " + tablaAsig.get(i).getNumLinea());
+        for (int i = 0; i < tablaAsig.size(); i++) {                                                                      //OBTENER VALOR REAL
+             if(tablaAsig.get(i).getNumLineaFinal()!= 0){
+                System.out.println("Función Tipo: " + tablaAsig.get(i).getTipoToken() + " Valor: " + tablaAsig.get(i).getValorReal() + " Linea Inicial: " + tablaAsig.get(i).getNumLinea() + " Linea Final: " + tablaAsig.get(i).getNumLineaFinal()) ;
+            }
+            else{
+                 System.out.println("Variable Tipo: " + tablaAsig.get(i).getTipoToken() + " Valor: " + tablaAsig.get(i).getValorReal() + " Linea: " + tablaAsig.get(i).getNumLinea());
+
+             }
+
         }
     }
 

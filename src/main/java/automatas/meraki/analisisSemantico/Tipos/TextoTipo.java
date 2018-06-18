@@ -9,5 +9,7 @@ public class TextoTipo implements Tipo {
     public String getIdentificador() {
         return this.identificador;
     }
+    public String  getValorR(){return "Temp";}
+
 
 }

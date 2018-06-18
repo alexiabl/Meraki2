@@ -24,4 +24,6 @@ public class NumEntero extends NumeroTipo {
     public String getIdentificador() {
         return super.getIdentificador();
     }
+
+    public String  getValorR(){return "T";}
 }

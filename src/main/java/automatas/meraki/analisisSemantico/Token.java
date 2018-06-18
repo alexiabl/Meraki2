@@ -2,14 +2,19 @@ package automatas.meraki.analisisSemantico;
 
 import automatas.meraki.analisisSemantico.Tipos.Tipo;
 
+import java.util.List;
+
 /**
  * Created by alexiaborchgrevink on 6/13/18.
  */
 public class Token {
     private TipoTokenTerminal tipoToken;
     private int numLinea;
+    private int numLineaFinal;
     private int scope;
     private Tipo valor;
+    private List<Token> lista;
+
 
     public Token(TipoTokenTerminal tipoTokenTerminal, int numLinea, Tipo valor) {
         this.tipoToken = tipoTokenTerminal;
@@ -30,6 +35,14 @@ public class Token {
         this.numLinea = numLinea;
     }
 
+    public int getNumLineaFinal() {
+        return this.numLineaFinal;
+    }
+
+    public void setNumLineaFinal(int numLinea) {
+        this.numLineaFinal = numLinea;
+    }
+
     public int getScope() {
         return this.scope;
     }
@@ -41,6 +54,8 @@ public class Token {
     public String getValor() {
         return this.valor.getIdentificador();
     }
+
+    public String getValorReal() {  return this.valor.getValorR(); }
 
     public void setValor(Tipo valor) {
         this.valor = valor;

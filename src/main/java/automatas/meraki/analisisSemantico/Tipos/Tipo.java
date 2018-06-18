@@ -7,5 +7,6 @@ public interface Tipo {
 
 
     public String getIdentificador();
+    public String getValorR();
 
 }

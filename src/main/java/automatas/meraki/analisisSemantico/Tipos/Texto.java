@@ -18,4 +18,6 @@ public class Texto extends TextoTipo {
     public String getIdentificador() {
         return super.getIdentificador();
     }
+
+    public String  getValorR(){return this.valor;}
 }
