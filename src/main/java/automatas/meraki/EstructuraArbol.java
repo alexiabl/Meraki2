@@ -1,12 +1,12 @@
 package automatas.meraki;
 
 import automatas.meraki.analisisSemantico.*;
+import automatas.meraki.analisisSemantico.Reglas.Regla;
 import automatas.meraki.arbol.Node;
 import automatas.meraki.arbol.PointerTree;
 import automatas.meraki.arbol.PointerTreeNode;
 import automatas.meraki.arbol.Tree;
 import com.sun.jmx.remote.internal.ArrayQueue;
-import automatas.meraki.analisisSemantico.Tipos.*;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -1,6 +1,10 @@
 package automatas.meraki.analisisSemantico.Operaciones;
 
 import automatas.meraki.analisisSemantico.Expresion;
+import automatas.meraki.analisisSemantico.Item;
+import automatas.meraki.analisisSemantico.Reglas.Regla;
+
+import java.util.List;
 
 /**
  * Created by alexiaborchgrevink on 6/14/18.
@@ -27,5 +31,21 @@ public class OperacionDivision implements Expresion {
 
     public void setLadoDer(Expresion ladoDer) {
         this.ladoDer = ladoDer;
+    }
+
+    public List<Item> getTokens() {
+        return null;
+    }
+
+    public void setTokens(List<Item> tokens) {
+
+    }
+
+    public String getIdentificador() {
+        return null;
+    }
+
+    public void setIdentificador(String nombre) {
+
     }
 }

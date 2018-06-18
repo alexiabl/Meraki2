@@ -1,6 +1,9 @@
 package automatas.meraki;
 
 import automatas.meraki.analisisSemantico.*;
+import automatas.meraki.analisisSemantico.Reglas.Asignacion;
+import automatas.meraki.analisisSemantico.Reglas.Funcion;
+import automatas.meraki.analisisSemantico.Reglas.Regla;
 import automatas.meraki.analisisSemantico.Tipos.*;
 
 import java.util.LinkedList;
@@ -12,21 +15,21 @@ import java.util.List;
 public class App {
     public static void main(String[] args) {
 
-        Token tok1 = new Token(TipoTokenTerminal.TIPONUM, 1, new NumeroTipo());
-        Token tok2 = new Token(TipoTokenTerminal.N_VAR, 1, new Texto("n"));
-        Token tok3 = new Token(TipoTokenTerminal.SIGUAL, 1, new Car('='));
-        Token tok4 = new Token(TipoTokenTerminal.NUMERO, 1, new NumEntero(5));
-        List<Token> tokensAsignacion = new LinkedList<Token>();
+        Item tok1 = new Token(TipoTokenTerminal.TIPONUM, 1, new NumeroTipo());
+        Item tok2 = new Token(TipoTokenTerminal.N_VAR, 1, new Texto("n"));
+        Item tok3 = new Token(TipoTokenTerminal.SIGUAL, 1, new Car('='));
+        Item tok4 = new Token(TipoTokenTerminal.NUMERO, 1, new NumEntero(5));
+        List<Item> tokensAsignacion = new LinkedList<Item>();
         tokensAsignacion.add(tok1);
         tokensAsignacion.add(tok2);
         tokensAsignacion.add(tok3);
         tokensAsignacion.add(tok4);
-        Regla asignacion = new Asignacion("Asignacion", tokensAsignacion);
+        Regla asignacion = new Asignacion("Asignacion");
+        asignacion.setTokens(tokensAsignacion);
 
         EstructuraArbol arbolSemantico = new EstructuraArbol();
 
         arbolSemantico.insertItem(asignacion);
-
 
         Token tok5 = new Token(TipoTokenTerminal.TIPONUM, 2, new NumeroTipo());
         Token tok6 = new Token(TipoTokenTerminal.N_FUNC, 2, new Texto("galleta"));
@@ -35,6 +38,7 @@ public class App {
         Token tok10 = new Token(TipoTokenTerminal.N_VAR, 2, new Texto("param1"));
         Token tok8 = new Token(TipoTokenTerminal.PF, 2, new Car(')'));
         Token tok11 = new Token(TipoTokenTerminal.LLAVEI, 2, new Car('{'));
+
 
         Token tok12 = new Token(TipoTokenTerminal.TIPOTEXTO, 3, new TextoTipo());
         Token tok13 = new Token(TipoTokenTerminal.N_VAR, 3, new Texto("varTipo"));
@@ -60,7 +64,7 @@ public class App {
         tokens.add(tok16);
         tokens.add(tok17);
 
-        Regla funcion1 = new Funcion("Funcion", tokens);
+        Regla funcion1 = new Funcion("Funcion");
         arbolSemantico.insertItem(funcion1);
 
         arbolSemantico.imprimirArbol();
