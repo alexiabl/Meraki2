@@ -7,7 +7,8 @@ import java.util.List;
 /**
  * Created by alexiaborchgrevink on 6/13/18.
  */
-public class Token {
+public class Token implements Item {
+
     private TipoTokenTerminal tipoToken;
     private int numLinea;
     private int numLineaFinal;

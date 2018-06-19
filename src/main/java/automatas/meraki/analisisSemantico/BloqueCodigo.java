@@ -1,5 +1,7 @@
 package automatas.meraki.analisisSemantico;
 
+import automatas.meraki.analisisSemantico.Reglas.Regla;
+
 import java.util.List;
 
 /**
