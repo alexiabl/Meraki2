@@ -27,7 +27,6 @@ public class App {
 
         arbolSemantico.insertItem(asignacion);
 
-
         Token tok5 = new Token(TipoTokenTerminal.TIPONUM, 2, new NumeroTipo());
         Token tok6 = new Token(TipoTokenTerminal.N_FUNC, 2, new Texto("galleta"));
         Token tok7 = new Token(TipoTokenTerminal.PI, 2, new Car('('));

@@ -11,6 +11,10 @@ import automatas.meraki.analisisSemantico.Tipos.*;
 import java.util.LinkedList;
 import java.util.List;
 
+import static automatas.meraki.analisisSemantico.TipoTokenTerminal.TIPOCAR;
+import static automatas.meraki.analisisSemantico.TipoTokenTerminal.TIPONUM;
+import static automatas.meraki.analisisSemantico.TipoTokenTerminal.TIPOTEXTO;
+
 public class EstructuraArbol {
 
     private PointerTree<Regla> arbol;
@@ -57,6 +61,7 @@ public class EstructuraArbol {
                     Token toktemp = regla.getTokens().get(1);
                     toktemp.setTipoToken(regla.getTokens().get(0).getTipoToken());
                    // Token tok1 = new Token(regla.getTokens().get(0).getTipoToken(),regla.getTokens().get(0).getNumLinea(),new Texto("Temp"));
+                    verificarTipos(regla.getTokens());
                     insertarATabla(toktemp);
                         //break;
                // }
@@ -68,7 +73,8 @@ public class EstructuraArbol {
                // if (token.getTipoToken().equals(TipoTokenTerminal.N_VAR)) {
             Token toktemp = regla.getTokens().get(1);
             toktemp.setTipoToken(regla.getTokens().get(0).getTipoToken());
-                    insertarATabla(toktemp);
+            verificarTipos(regla.getTokens());
+            insertarATabla(toktemp);
                 //    break;
                // }
             //}
@@ -83,6 +89,7 @@ public class EstructuraArbol {
 
                    // System.out.println(regla.getTokens().size()-1);
                     //System.out.println(regla.getTokens().get(regla.getTokens().size()-1).getNumLinea());
+                    verificarTipos(regla.getTokens());
                     insertarATabla(toktemp);
 
               //  } else if (token.getTipoToken().equals(TipoTokenTerminal.N_VAR)) {
@@ -127,6 +134,29 @@ public class EstructuraArbol {
         this.tablaSimbolos.getTabla().add(tok);
     }
 
+    //nueva función para verificar concordancia en asignaciones del mismo tipo
+    public boolean verificarTipos(List<Token> asign)
+    {
+        //TIPONUM -> NUMERO
+        //TIPOTEXTO -> TEXTO
+        //TIPOCAR -> CARACTER
+        //TIPOBOOL -> VERDADERO || FALSO
+        boolean tipoCorrecto = false;
+        if(asign.get(0).getTipoToken() == TIPONUM && asign.get(3).getValor() == "NUMERO") { tipoCorrecto = true; }
+        else if(asign.get(0).getTipoToken() == TIPOTEXTO && asign.get(3).getValor() == "TEXTO") { tipoCorrecto = true; }
+        else if(asign.get(0).getTipoToken() == TIPOCAR && asign.get(3).getValor() == "CARACTER") { tipoCorrecto = true; }
+       // else if(asign.get(0).getTipoToken()) == TIPOBOOL && (asign.get(3).getValor() == "VERDADERO " || asign.get(3).getValor() == "FALSO"  ) ) { tipoCorrecto = true; }
+        else
+        {
+            System.out.println("tipos diferentes "+asign.get(0).getTipoToken()+" y "+asign.get(3).getValor());
+            tipoCorrecto = false;
+        }
+        if(tipoCorrecto==true)
+        {
+            System.out.println("tipos iguales "+asign.get(0).getTipoToken()+" y "+asign.get(3).getValor());
+        }
+        return tipoCorrecto;
+    }
 
     public void imprimirArbol() {
         List<Node<Regla>> imprimirArbol = getInDepthTraversal(this.arbol);
@@ -144,7 +174,7 @@ public class EstructuraArbol {
     public void imprimirTablas() {
         List<Token> tablaAsig = this.tablaSimbolos.getTabla();
         System.out.println("Tabla de Simbolos:");
-        for (int i = 0; i < tablaAsig.size(); i++) {                                                                      //OBTENER VALOR REAL
+        for (int i = 0; i < tablaAsig.size(); i++) {                                                                      //OBTENER VALOR REAL de token
              if(tablaAsig.get(i).getNumLineaFinal()!= 0){
                 System.out.println("Función Tipo: " + tablaAsig.get(i).getTipoToken() + " Valor: " + tablaAsig.get(i).getValorReal() + " Linea Inicial: " + tablaAsig.get(i).getNumLinea() + " Linea Final: " + tablaAsig.get(i).getNumLineaFinal()) ;
             }
