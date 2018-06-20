@@ -32,6 +32,10 @@ public class Haga implements Regla {
         this.identificador = nombre;
     }
 
+    public void agregarATokens(Item tok) {
+        this.tokens.add(tok);
+    }
+
     public List<Item> getTokens() {
         return this.tokens;
     }

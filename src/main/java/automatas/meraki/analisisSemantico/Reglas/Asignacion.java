@@ -17,6 +17,7 @@ public class Asignacion implements Regla {
     private String identificador;
 
     public Asignacion(String id) {
+        this.identificador = id;
         this.tokens = new LinkedList<Item>();
         this.expresiones = new LinkedList<Item>();
     }
@@ -35,6 +36,10 @@ public class Asignacion implements Regla {
 
     public void setIdentificador(String nombre) {
         this.identificador = nombre;
+    }
+
+    public void agregarATokens(Item tok) {
+        this.tokens.add(tok);
     }
 
     public List<Item> getExpresiones() {

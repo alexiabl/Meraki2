@@ -3,49 +3,73 @@ package automatas.meraki.analisisSemantico.Operaciones;
 import automatas.meraki.analisisSemantico.Expresion;
 import automatas.meraki.analisisSemantico.Item;
 import automatas.meraki.analisisSemantico.Reglas.Regla;
+import automatas.meraki.analisisSemantico.Tipos.Tipo;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Created by alexiaborchgrevink on 6/14/18.
  */
-public class OperacionDivision implements Expresion {
-    private Expresion ladoIzq, ladoDer;
+public class OperacionDivision implements Regla {
+    private Tipo ladoIzq, ladoDer;
 
-    public OperacionDivision(Expresion ladoIzq, Expresion ladoDer) {
+    public OperacionDivision(Tipo ladoIzq, Tipo ladoDer) {
         this.ladoDer = ladoDer;
         this.ladoIzq = ladoIzq;
     }
 
-    public Expresion getLadoIzq() {
+    public Tipo getLadoIzq() {
         return this.ladoIzq;
     }
 
-    public Expresion getLadoDer() {
+    public Tipo getLadoDer() {
         return this.ladoDer;
     }
 
-    public void setLadoIzq(Expresion ladoIzq) {
+    public void setLadoIzq(Tipo ladoIzq) {
         this.ladoIzq = ladoIzq;
     }
 
-    public void setLadoDer(Expresion ladoDer) {
+    public void setLadoDer(Tipo ladoDer) {
         this.ladoDer = ladoDer;
     }
 
+    private List<Item> tokens;
+    private List<Item> expresiones;
+    private String identificador;
+
+    public OperacionDivision(String id) {
+        this.identificador = id;
+        this.tokens = new LinkedList<Item>();
+        this.expresiones = new LinkedList<Item>();
+    }
+
     public List<Item> getTokens() {
-        return null;
+        return tokens;
     }
 
     public void setTokens(List<Item> tokens) {
-
+        this.tokens = tokens;
     }
 
     public String getIdentificador() {
-        return null;
+        return this.identificador;
     }
 
     public void setIdentificador(String nombre) {
+        this.identificador = nombre;
+    }
 
+    public void agregarATokens(Item tok) {
+        this.tokens.add(tok);
+    }
+
+    public List<Item> getExpresiones() {
+        return this.expresiones;
+    }
+
+    public void setExpresiones(List<Item> expresiones) {
+        this.expresiones = expresiones;
     }
 }

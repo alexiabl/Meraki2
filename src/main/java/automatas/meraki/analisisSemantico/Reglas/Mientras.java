@@ -32,6 +32,10 @@ public class Mientras implements Regla {
         this.identificador = nombre;
     }
 
+    public void agregarATokens(Item tok) {
+
+    }
+
     public List<Item> getTokens() {
         return this.tokens;
     }

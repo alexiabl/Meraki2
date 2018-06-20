@@ -33,4 +33,8 @@ public class Imprimir implements Regla {
     public void setIdentificador(String nombre) {
         this.identificador = nombre;
     }
+
+    public void agregarATokens(Item tok) {
+        this.tokens.add(tok);
+    }
 }

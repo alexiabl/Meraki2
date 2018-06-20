@@ -19,4 +19,6 @@ public interface Regla extends Item {
     public String getIdentificador();
 
     public void setIdentificador(String nombre);
+
+    public void agregarATokens(Item tok);
 }

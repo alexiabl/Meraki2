@@ -17,6 +17,7 @@ public class Iteracion implements Regla {
     public Iteracion(String id) {
         this.identificador = id;
         this.tokens = new LinkedList<Item>();
+        this.indicaciones = new LinkedList<Item>();
     }
 
     public List<Item> getTokens() {
@@ -33,6 +34,10 @@ public class Iteracion implements Regla {
 
     public void setIdentificador(String nombre) {
         this.identificador = nombre;
+    }
+
+    public void agregarATokens(Item tok) {
+        this.tokens.add(tok);
     }
 
     public List<Item> getIndicaciones() {
