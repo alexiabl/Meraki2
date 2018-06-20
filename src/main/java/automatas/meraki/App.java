@@ -40,7 +40,7 @@ public class App {
 
         EstructuraArbol arbolSemantico = new EstructuraArbol();
 
-        arbolSemantico.insertItem2(asignacion);
+        arbolSemantico.insertItem2(asignacion,0);
 
         Token tok5 = new Token(TipoTokenTerminal.TIPONUM, 2, new NumeroTipo());
         Token tok6 = new Token(TipoTokenTerminal.N_FUNC, 2, new Texto("galleta"));
@@ -76,7 +76,7 @@ public class App {
         tokens.add(tok17);
 
         Regla funcion1 = new Funcion("Funcion");
-        arbolSemantico.insertItem2(funcion1);
+      //  arbolSemantico.insertItem2(funcion1);
 
         arbolSemantico.imprimirArbol();
         arbolSemantico.imprimirTablas();

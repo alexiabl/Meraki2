@@ -54,40 +54,42 @@ public class EstructuraArbol {
         this.arbol = arbol;
     }
 
-    public void insertItem2(Regla regla) {
-        Node<Regla> nodoActual = this.nodoActual;
-        int niveles = 0;
-        Regla reglaNodo = new Asignacion(regla.getIdentificador());
-        Node<Regla> nodoAsignacion = new PointerTreeNode<Regla>(reglaNodo, this.nodoActual);
-        this.nodoActual.addChild(nodoAsignacion); //Aqui esta agregando doble cuando hace el llamado recursivo
-        for (int i = 0; i < regla.getTokens().size(); i++) {
-            Item itemPrevio = null;
-            if (i > 0) {
-                itemPrevio = regla.getTokens().get(i - 1);
-            }
-            Item item = regla.getTokens().get(i);
-            if (item instanceof Token) {
-                //agregar token a lista de tokens de nueva regla asignacion
-                reglaNodo.agregarATokens(item);
-
-                //si el item previo fue una Regla, tengo que devolverme de nivel
-                if (itemPrevio != null && itemPrevio instanceof Regla) {
-                    for (int n = 0; n < niveles; n++) {
-                        this.nodoActual = this.nodoActual.getParent();
-                    }
+    public void insertItem2(Regla regla, int niveles) {
+            Node<Regla> nodoActual = this.nodoActual;
+            Regla reglaNodo = new Asignacion(regla.getIdentificador());
+            //int niveles = 0;
+           // if niveles == 0 {
+            Node<Regla> nodoAsignacion = new PointerTreeNode<Regla>(reglaNodo, this.nodoActual);
+            this.nodoActual.addChild(nodoAsignacion); //Aqui esta agregando doble cuando hace el llamado recursivo
+       // }
+            for (int i = 0; i < regla.getTokens().size(); i++) {
+                Item itemPrevio = null;
+                if (i > 0) {
+                    itemPrevio = regla.getTokens().get(i - 1);
                 }
-            } else if (item instanceof Regla) { //esto en realidad deberia ser un metodo recursivo
-                //nuevo nivel
-                Regla reglaHijo = (Regla) item;
-                reglaHijo.setTokens(((Regla) item).getTokens());
-                Node<Regla> nodoHijo = new PointerTreeNode<Regla>(reglaHijo, nodoAsignacion);
-                nodoAsignacion.addChild(nodoHijo);
-                this.nodoActual = nodoAsignacion;
-                niveles++;
-                this.insertItem2(reglaHijo);
-                //Aqui se debe recorrer la lista de tokens de la Regla hijo para verificar si se debe crear otro nivel
+                Item item = regla.getTokens().get(i);
+                if (item instanceof Token) {
+                    //agregar token a lista de tokens de nueva regla asignacion
+                    reglaNodo.agregarATokens(item);
+
+                    //si el item previo fue una Regla, tengo que devolverme de nivel
+                    if (itemPrevio != null && itemPrevio instanceof Regla) {
+                        for (int n = 0; n < niveles; n++) {
+                            this.nodoActual = this.nodoActual.getParent();
+                        }
+                    }
+                } else if (item instanceof Regla) { //esto en realidad deberia ser un metodo recursivo
+                    //nuevo nivel
+                    Regla reglaHijo = (Regla) item;
+                    reglaHijo.setTokens(((Regla) item).getTokens());
+                    Node<Regla> nodoHijo = new PointerTreeNode<Regla>(reglaHijo, nodoAsignacion);
+                    //nodoAsignacion.addChild(nodoHijo);
+                    this.nodoActual = nodoAsignacion;
+                    niveles++;
+                    this.insertItem2(reglaHijo,niveles);
+                    //Aqui se debe recorrer la lista de tokens de la Regla hijo para verificar si se debe crear otro nivel
+                }
             }
-        }
     }
 
     public void revisarReglaRecursivo(Regla reglaActual) {
