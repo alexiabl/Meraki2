@@ -1,4 +1,4 @@
-package automatas.meraki.analisisSemantico.Operaciones;
+package automatas.meraki.analisisSemantico.Comparaciones;
 
 import automatas.meraki.analisisSemantico.Item;
 import automatas.meraki.analisisSemantico.Reglas.Regla;
@@ -10,10 +10,10 @@ import java.util.List;
 /**
  * Created by alexiaborchgrevink on 6/14/18.
  */
-public class OperacionMultiplicacion implements Regla {
+public class Diferente implements Regla {
     private Tipo ladoIzq, ladoDer;
 
-    public OperacionMultiplicacion(Tipo ladoIzq, Tipo ladoDer) {
+    public Diferente(Tipo ladoIzq, Tipo ladoDer) {
         this.ladoDer = ladoDer;
         this.ladoIzq = ladoIzq;
     }
@@ -38,7 +38,7 @@ public class OperacionMultiplicacion implements Regla {
     private List<Item> expresiones;
     private String identificador;
 
-    public OperacionMultiplicacion(String id) {
+    public Diferente(String id) {
         this.identificador = id;
         this.tokens = new LinkedList<Item>();
         this.expresiones = new LinkedList<Item>();

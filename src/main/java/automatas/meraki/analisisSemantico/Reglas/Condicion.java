@@ -1,44 +1,21 @@
-package automatas.meraki.analisisSemantico.Operaciones;
+package automatas.meraki.analisisSemantico.Reglas;
 
 import automatas.meraki.analisisSemantico.Item;
-import automatas.meraki.analisisSemantico.Reglas.Regla;
-import automatas.meraki.analisisSemantico.Tipos.Tipo;
 
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by alexiaborchgrevink on 6/14/18.
+ * Created by alexiaborchgrevink on 6/13/18.
  */
-public class OperacionMultiplicacion implements Regla {
-    private Tipo ladoIzq, ladoDer;
-
-    public OperacionMultiplicacion(Tipo ladoIzq, Tipo ladoDer) {
-        this.ladoDer = ladoDer;
-        this.ladoIzq = ladoIzq;
-    }
-
-    public Tipo getLadoIzq() {
-        return this.ladoIzq;
-    }
-
-    public Tipo getLadoDer() {
-        return this.ladoDer;
-    }
-
-    public void setLadoIzq(Tipo ladoIzq) {
-        this.ladoIzq = ladoIzq;
-    }
-
-    public void setLadoDer(Tipo ladoDer) {
-        this.ladoDer = ladoDer;
-    }
+public class Condicion implements Regla {
 
     private List<Item> tokens;
     private List<Item> expresiones;
     private String identificador;
+    private int scope;
 
-    public OperacionMultiplicacion(String id) {
+    public Condicion(String id) {
         this.identificador = id;
         this.tokens = new LinkedList<Item>();
         this.expresiones = new LinkedList<Item>();
@@ -71,4 +48,8 @@ public class OperacionMultiplicacion implements Regla {
     public void setExpresiones(List<Item> expresiones) {
         this.expresiones = expresiones;
     }
+
+    public void setScope(int nivel){this.scope = nivel;}
+
+    public int getScope() {return this.scope;}
 }
