@@ -49,31 +49,28 @@ public class analizadorSemantico {
         else
         {
             System.out.println("tipos diferentes "+token.getTipoToken()+" y "+token2.getTipoToken());
-            tipoCorrecto = false;
+            System.out.println("Mae, esa asignacion esta incorrecta, fijate en el tipo: ");
         }
-        if(tipoCorrecto==true)
+        if(tipoCorrecto)
         {
             System.out.println("tipos iguales "+token.getTipoToken()+" y "+token2.getTipoToken());
         }
         return tipoCorrecto;
     }
 
-    public void revisarDeclaraciones() {
-        /*
-        for (int i = 0; i < declaracionesVar.size(); i++) {
-            List<Token> tokens = declaracionesVar.get(i).getTokens();
-
-            for (int j = i + 1; j < declaracionesVar.size(); j++) {
-                Token var2 = declaracionesVar.get(j);
-                if (var1.getValor().equals(var2.getValor())) {
-                    error(TipoError.DECLARACION_VAR_MULTIPLE, var1);
-                }
-            }
-        }*/
-    }
-
-    public void revisarAsignacionesArbol() {
-
+    public boolean revisarDevoluciones(Item funcion, Item devolucion) //devolver el tipo de dato que indican
+    {
+        //if(regla instance of Funcion)
+        //para cada función verificar sus parámetros
+        if(((Token) funcion).getTipoToken() == ((Token) devolucion).getTipoToken()) {
+            System.out.println("tipos iguales " + ((Token) funcion).getTipoToken() + " y " + ((Token) devolucion).getTipoToken());
+            return true;
+        }
+        else {
+            System.out.println("tipos diferentes " + ((Token) funcion).getTipoToken()+ " y " + ((Token) devolucion).getTipoToken());
+            System.out.println("Oh no! Esto no es lo que deberia devolver: " + ((Token) funcion).getTipoToken());
+            return false;
+        }
     }
 
 
