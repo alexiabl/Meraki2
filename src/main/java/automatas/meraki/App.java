@@ -1,11 +1,14 @@
 package automatas.meraki;
 
-import automatas.meraki.analisisSemantico.*;
-import automatas.meraki.analisisSemantico.Operaciones.OperacionDivision;
-import automatas.meraki.analisisSemantico.Reglas.Asignacion;
-import automatas.meraki.analisisSemantico.Reglas.Funcion;
-import automatas.meraki.analisisSemantico.Reglas.Regla;
+//import automatas.meraki.analisisSemantico.*;
+import automatas.meraki.analisisSemantico.Comparaciones.*;
+import automatas.meraki.analisisSemantico.Item;
+import automatas.meraki.analisisSemantico.Operaciones.*;
+import automatas.meraki.analisisSemantico.Reglas.*;
+import automatas.meraki.analisisSemantico.TipoTokenTerminal;
 import automatas.meraki.analisisSemantico.Tipos.*;
+import automatas.meraki.analisisSemantico.Token;
+
 
 import java.util.LinkedList;
 import java.util.List;
@@ -16,6 +19,249 @@ import java.util.List;
 public class App {
     public static void main(String[] args) {
 
+
+        //Inicio Funcion
+        Item tok1 = new Token(TipoTokenTerminal.TIPONUM, 1, new NumeroTipo()); //TKF
+        Item tok2 = new Token(TipoTokenTerminal.N_VAR, 1, new Texto("fibonacci")); //TKG
+        Token tok3 = new Token(TipoTokenTerminal.PI, 1, new Car('(')); //TKF
+
+        Regla regla1 = new Llamado("Llamado"); //TKF
+        //Inicio Llamado
+        Token tok4 = new Token(TipoTokenTerminal.TIPONUM, 1, new NumeroTipo());
+        Token tok5 = new Token(TipoTokenTerminal.N_VAR, 1, new Texto("n"));
+        List<Item> tokensReglaLlamado = new LinkedList<Item>();
+        tokensReglaLlamado.add(tok4);
+        tokensReglaLlamado.add(tok5);
+        regla1.setTokens(tokensReglaLlamado);
+        Token tok6 = new Token(TipoTokenTerminal.PF, 1, new Car(')'));  //TKF
+        Token tok7 = new Token(TipoTokenTerminal.LLAVEI, 1, new Car('{')); //TKF
+
+       //Inicio Si
+        Regla regla2 = new Si("Si");
+        Token tok8 =  new Token(TipoTokenTerminal.SI,2, new Texto("Si"));
+        Token tok9 = new Token(TipoTokenTerminal.LLAVEI, 2, new Car('{'));
+        //Inicio Condicion
+        Regla condicion = new Condicion("Condicion");
+                //Condicion1
+        Regla condicion1 =  new Igual("Igual");
+        Token tok31 = new Token(TipoTokenTerminal.N_VAR,2,new Texto("n"));
+        Token tok28 = new Token(TipoTokenTerminal.NUMERO,2,new NumEntero(0));
+        List<Item> tokensReglaCondicion1 = new LinkedList<Item>();
+        tokensReglaCondicion1.add(tok31);
+        tokensReglaCondicion1.add(tok28);
+        condicion1.setTokens(tokensReglaCondicion1);
+            //Condicion2
+        Regla condicion2 =  new Igual("Igual");
+        Token tok29 = new Token(TipoTokenTerminal.N_VAR,2,new Texto("n"));
+        Token tok30 = new Token(TipoTokenTerminal.NUMERO,2,new NumEntero(1));
+        List<Item> tokensReglaCondicion2 = new LinkedList<Item>();
+        tokensReglaCondicion2.add(tok29);
+        tokensReglaCondicion2.add(tok30);
+        condicion2.setTokens(tokensReglaCondicion2);
+            //Llenar condicion
+        Token tok32 = new Token(TipoTokenTerminal.O,2,new Car('O'));
+        List<Item> tokensReglaCondicion = new LinkedList<Item>();
+        tokensReglaCondicion.add(condicion1);
+        tokensReglaCondicion.add(tok32);
+        tokensReglaCondicion.add(condicion2);
+        condicion.setTokens(tokensReglaCondicion);
+
+
+        //Inicio Devuelva
+        Regla regla3 = new Devuelva("Devuelva");
+        Token tok10 =  new Token(TipoTokenTerminal.DEVUELVA,3, new Texto("Devuelva"));
+        Token tok11 = new Token(TipoTokenTerminal.N_VAR, 3, new Texto("n"));
+        List<Item> tokensReglaDevuelva1 = new LinkedList<Item>();
+        tokensReglaDevuelva1.add(tok10);
+        tokensReglaDevuelva1.add(tok11);
+        regla3.setTokens(tokensReglaDevuelva1);
+
+        //Llenar Si
+        Token tok12 = new Token(TipoTokenTerminal.LLAVEF, 4, new Car('}'));
+        List<Item> tokensReglaSi1 = new LinkedList<Item>();
+        tokensReglaSi1.add(tok8);
+        tokensReglaSi1.add(tok9);
+        tokensReglaSi1.add(condicion);
+        tokensReglaSi1.add(regla3);
+        tokensReglaSi1.add(tok12);
+        regla2.setTokens(tokensReglaSi1);       //TKF
+
+
+        //Inicio sino
+        Regla regla4 = new Sino("Sino");
+        List<Item> tokensReglaSino = new LinkedList<Item>();
+        Token tok13 =  new Token(TipoTokenTerminal.SINO,5, new Texto("Sino"));
+        Token tok14 = new Token(TipoTokenTerminal.LLAVEI, 5, new Car('{'));
+        tokensReglaSino.add(tok13);
+        tokensReglaSino.add(tok14);
+
+        //Inicio asignacion1 dentro de sino
+        Item tok15 = new Token(TipoTokenTerminal.TIPONUM, 6, new NumeroTipo());
+        Item tok16 = new Token(TipoTokenTerminal.N_VAR, 6, new Texto("a"));
+        Item tok17 = new Token(TipoTokenTerminal.SIGUAL, 6, new Car('='));
+        Regla regla5 = new OperacionResta("OperacionResta");
+        Item tokRegla1 = new Token(TipoTokenTerminal.N_VAR, 6, new Texto("n"));
+        Item tokRegla2 = new Token(TipoTokenTerminal.NUMERO, 6, new NumEntero(2));
+        List<Item> tokensReglaOperacionS = new LinkedList<Item>();
+        tokensReglaOperacionS.add(tokRegla1);
+        tokensReglaOperacionS.add(tokRegla2);
+        regla5.setTokens(tokensReglaOperacionS);
+
+        List<Item> tokensAsignacion = new LinkedList<Item>();
+        tokensAsignacion.add(tok15);
+        tokensAsignacion.add(tok16);
+        tokensAsignacion.add(tok17);
+        tokensAsignacion.add(regla5);
+        Regla asignacion1 = new Asignacion("Asignacion");
+        asignacion1.setTokens(tokensAsignacion);
+
+        //Inicio asignacion2 dentro de sino
+        Item tok18 = new Token(TipoTokenTerminal.TIPONUM, 7, new NumeroTipo());
+        Item tok19 = new Token(TipoTokenTerminal.N_VAR, 7, new Texto("b"));
+        Item tok20 = new Token(TipoTokenTerminal.SIGUAL, 7, new Car('='));
+        Regla regla6 = new OperacionResta("OperacionResta");
+        Item tokRegla3 = new Token(TipoTokenTerminal.N_VAR, 7, new Texto("n"));
+        Item tokRegla4 = new Token(TipoTokenTerminal.NUMERO, 7, new NumEntero(1));
+        List<Item> tokensReglaOperacionR = new LinkedList<Item>();
+        tokensReglaOperacionR.add(tokRegla3);
+        tokensReglaOperacionR.add(tokRegla4);
+        regla6.setTokens(tokensReglaOperacionR);
+
+        List<Item> tokensAsignacion2 = new LinkedList<Item>();
+        tokensAsignacion2.add(tok18);
+        tokensAsignacion2.add(tok19);
+        tokensAsignacion2.add(tok20);
+        tokensAsignacion2.add(regla6);
+        Regla asignacion2 = new Asignacion("Asignacion");
+        asignacion2.setTokens(tokensAsignacion2);
+
+        //Inicio asignacion3 dentro de sino
+        Item tok21 = new Token(TipoTokenTerminal.TIPONUM, 8, new NumeroTipo());
+        Item tok22 = new Token(TipoTokenTerminal.N_VAR, 8, new Texto("r"));
+        Item tok23 = new Token(TipoTokenTerminal.SIGUAL, 8, new Car('='));
+        //Inicio suma de asignacion
+        Regla regla7 = new OperacionSuma("OperacionSuma");
+
+        Regla regla8 = new Llamado("Llamado");
+        Item tokRegla5 = new Token(TipoTokenTerminal.N_VAR, 8, new Texto("fibonacci"));
+        Item tokRegla6 = new Token(TipoTokenTerminal.TIPONUM, 8, new Texto("a"));
+        List<Item> tokensReglaLlamado1 = new LinkedList<Item>();
+        tokensReglaLlamado1.add(tokRegla5);
+        tokensReglaLlamado1.add(tokRegla6);
+        regla8.setTokens(tokensReglaLlamado1);
+
+        Regla regla9 = new Llamado("Llamado");
+        Item tokRegla7 = new Token(TipoTokenTerminal.N_VAR, 8, new Texto("fibonacci"));
+        Item tokRegla8 = new Token(TipoTokenTerminal.TIPONUM, 8, new Texto("b"));
+        List<Item> tokensReglaLlamado2 = new LinkedList<Item>();
+        tokensReglaLlamado2.add(tokRegla7);
+        tokensReglaLlamado2.add(tokRegla8);
+        regla9.setTokens(tokensReglaLlamado2);
+        //llenados uma
+        List<Item> tokensSuma = new LinkedList<Item>();
+        tokensSuma.add(regla8);
+        tokensSuma.add(regla9);
+        regla7.setTokens(tokensSuma);
+
+        //Llenado asignacion
+        List<Item> tokensAsignacion3 = new LinkedList<Item>();
+        tokensAsignacion3.add(tok21);
+        tokensAsignacion3.add(tok22);
+        tokensAsignacion3.add(tok23);
+        tokensAsignacion3.add(regla7);
+        Regla asignacion3 = new Asignacion("Asignacion");
+        asignacion3.setTokens(tokensAsignacion3);
+
+        //Inicio Devuelva en Sino
+        Regla regla11 = new Devuelva("Devuelva");
+        Token tok26 =  new Token(TipoTokenTerminal.DEVUELVA,9, new Texto("Devuelva"));
+        Token tok27 = new Token(TipoTokenTerminal.N_VAR, 9, new Texto("r"));
+        List<Item> tokensReglaDevuelva2 = new LinkedList<Item>();
+        tokensReglaDevuelva2.add(tok26);
+        tokensReglaDevuelva2.add(tok27);
+        regla11.setTokens(tokensReglaDevuelva2);
+
+        //Llena sino
+
+        tokensReglaSino.add(asignacion1);
+        tokensReglaSino.add(asignacion2);
+        tokensReglaSino.add(asignacion3);
+        tokensReglaSino.add(regla11);
+        Token tok24 = new Token(TipoTokenTerminal.LLAVEF, 10, new Car('}'));
+        tokensReglaSino.add(tok24);
+        regla4.setTokens(tokensReglaSino);          //TKF
+
+        //
+
+        Token tok25 = new Token(TipoTokenTerminal.LLAVEF, 11, new Car('}')); //tkf
+        Regla funcion = new Funcion("Funcion");
+        List<Item> tokensFuncion = new LinkedList<Item>();
+        tokensFuncion.add(tok1);
+        tokensFuncion.add(tok2);
+        tokensFuncion.add(tok3);
+        tokensFuncion.add(regla1);
+        tokensFuncion.add(tok6);
+        tokensFuncion.add(tok7);
+        tokensFuncion.add(regla2);
+        tokensFuncion.add(regla4);
+        tokensFuncion.add(tok25);
+        funcion.setTokens(tokensFuncion);
+
+        //Inicio main
+        Token tok35 = new Token(TipoTokenTerminal.MAIN,12,new Texto("main"));
+        Token tok36 = new Token(TipoTokenTerminal.PI, 12, new Car('('));
+        Token tok37 = new Token(TipoTokenTerminal.PF, 12, new Car(')'));
+        Token tok38 = new Token(TipoTokenTerminal.LLAVEI, 12, new Car('{'));
+        Token tok39 = new Token(TipoTokenTerminal.LLAVEF, 14, new Car('}'));
+            //Llamado
+        Regla llamado = new Llamado("Llamado");
+        Item tokRegla14 = new Token(TipoTokenTerminal.N_VAR, 13, new Texto("fibonacci"));
+        Item tokRegla15 = new Token(TipoTokenTerminal.NUMERO, 13, new NumEntero(5));
+        List<Item> tokensReglaLlamado3 = new LinkedList<Item>();
+        tokensReglaLlamado3.add(tokRegla14);
+        tokensReglaLlamado3.add(tokRegla15);
+        llamado.setTokens(tokensReglaLlamado3);
+
+        Regla main = new Main("Main");
+        List<Item> tokensReglaMain = new LinkedList<Item>();
+        tokensReglaMain.add(tok35);
+        tokensReglaMain.add(tok36);
+        tokensReglaMain.add(tok37);
+        tokensReglaMain.add(tok38);
+        tokensReglaMain.add(llamado);
+        tokensReglaMain.add(tok39);
+        main.setTokens(tokensReglaMain);
+
+        Regla meraki = new Meraki("Meraki");
+        List<Item> tokensReglaMeraki = new LinkedList<Item>();
+        tokensReglaMeraki.add(funcion);
+        tokensReglaMeraki.add(main);
+        meraki.setTokens(tokensReglaMeraki);
+
+        EstructuraArbol arbolSemantico = new EstructuraArbol();
+
+        arbolSemantico.insertItem2(meraki,0);
+
+        Token tok40 = new Token(TipoTokenTerminal.LLAVEF, 11, new Car('.')); //tkf
+
+        /*
+        Item tokRegla7 = new Token(TipoTokenTerminal.N_VAR, 6, new Texto("n"));
+        Item tokRegla8 = new Token(TipoTokenTerminal.NUMERO, 6, new NumEntero(1));
+        List<Item> tokensReglaOperacionR = new LinkedList<Item>();
+        tokensReglaOperacionR.add(tokRegla3);
+        tokensReglaOperacionR.add(tokRegla4);
+        regla6.setTokens(tokensReglaOperacionR);
+
+        List<Item> tokensAsignacion2 = new LinkedList<Item>();
+        tokensAsignacion.add(tok18);
+        tokensAsignacion.add(tok19);
+        tokensAsignacion.add(tok20);
+        tokensAsignacion.add(regla6);
+        Regla asignacion2 = new Asignacion("Asignacion");
+        asignacion2.setTokens(tokensAsignacion2);*/
+
+
+        /*
         Item tok1 = new Token(TipoTokenTerminal.TIPONUM, 1, new NumeroTipo());
         Item tok2 = new Token(TipoTokenTerminal.N_VAR, 1, new Texto("n"));
         Item tok3 = new Token(TipoTokenTerminal.SIGUAL, 1, new Car('='));
@@ -84,6 +330,6 @@ public class App {
         arbolSemantico.imprimirArbol();
         arbolSemantico.imprimirTablas();
 
-
+        */
     }
 }
