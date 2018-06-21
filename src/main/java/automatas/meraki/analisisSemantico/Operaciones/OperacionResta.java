@@ -3,38 +3,41 @@ package automatas.meraki.analisisSemantico.Operaciones;
 import automatas.meraki.analisisSemantico.Expresion;
 import automatas.meraki.analisisSemantico.Item;
 import automatas.meraki.analisisSemantico.Reglas.Regla;
+import automatas.meraki.analisisSemantico.Tipos.Tipo;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Created by alexiaborchgrevink on 6/14/18.
  */
 public class OperacionResta implements Regla {
-    private Expresion ladoIzq, ladoDer;
+    private Tipo ladoIzq, ladoDer;
     private List<Item> tokens;
-    private List<Item> indicaciones;
+    private List<Item> expresiones;
     private String identificador;
 
-    public OperacionResta(Expresion ladoIzq, Expresion ladoDer) {
+    public OperacionResta(Tipo ladoIzq, Tipo ladoDer) {
         this.ladoDer = ladoDer;
         this.ladoIzq = ladoIzq;
     }
 
-    public Expresion getLadoIzq() {
+    public Tipo getLadoIzq() {
         return this.ladoIzq;
     }
 
-    public Expresion getLadoDer() {
+    public Tipo getLadoDer() {
         return this.ladoDer;
     }
 
-    public void setLadoIzq(Expresion ladoIzq) {
+    public void setLadoIzq(Tipo ladoIzq) {
         this.ladoIzq = ladoIzq;
     }
 
-    public void setLadoDer(Expresion ladoDer) {
+    public void setLadoDer(Tipo ladoDer) {
         this.ladoDer = ladoDer;
     }
+
 
     public List<Item> getTokens() {
         return this.tokens;
@@ -55,4 +58,12 @@ public class OperacionResta implements Regla {
     public void agregarATokens(Item tok) {
         this.tokens.add(tok);
     }
+
+    public OperacionResta(String id) {
+        this.identificador = id;
+        this.tokens = new LinkedList<Item>();
+        this.expresiones = new LinkedList<Item>();
+    }
+
 }
+
