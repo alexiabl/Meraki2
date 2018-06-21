@@ -25,14 +25,14 @@ public class App {
         Item tok2 = new Token(TipoTokenTerminal.N_VAR, 1, new Texto("fibonacci")); //TKG
         Token tok3 = new Token(TipoTokenTerminal.PI, 1, new Car('(')); //TKF
 
-        Regla regla1 = new Llamado("Llamado"); //TKF
+        Regla regla1 = new Parametros("Parametros"); //TKF
         //Inicio Llamado
         Token tok4 = new Token(TipoTokenTerminal.TIPONUM, 1, new NumeroTipo());
         Token tok5 = new Token(TipoTokenTerminal.N_VAR, 1, new Texto("n"));
-        List<Item> tokensReglaLlamado = new LinkedList<Item>();
-        tokensReglaLlamado.add(tok4);
-        tokensReglaLlamado.add(tok5);
-        regla1.setTokens(tokensReglaLlamado);
+        List<Item> tokensReglaParametros = new LinkedList<Item>();
+        tokensReglaParametros.add(tok4);
+        tokensReglaParametros.add(tok5);
+        regla1.setTokens(tokensReglaParametros);
         Token tok6 = new Token(TipoTokenTerminal.PF, 1, new Car(')'));  //TKF
         Token tok7 = new Token(TipoTokenTerminal.LLAVEI, 1, new Car('{')); //TKF
 
@@ -241,8 +241,12 @@ public class App {
         EstructuraArbol arbolSemantico = new EstructuraArbol();
 
         arbolSemantico.insertItem2(meraki,0);
+//        arbolSemantico.imprimirArbol();
+        arbolSemantico.imprimirTablaSimbolos();
+        arbolSemantico.imprimirTablaSimbolosFunciones();
 
         Token tok40 = new Token(TipoTokenTerminal.LLAVEF, 11, new Car('.')); //tkf
+
 
         /*
         Item tokRegla7 = new Token(TipoTokenTerminal.N_VAR, 6, new Texto("n"));
@@ -288,7 +292,7 @@ public class App {
 
         EstructuraArbol arbolSemantico = new EstructuraArbol();
 
-        arbolSemantico.insertItem2(asignacion,0);
+        arbolSemantico.insertItem2(asignacion, 0);
 
 
         Token tok5 = new Token(TipoTokenTerminal.TIPONUM, 2, new NumeroTipo());
@@ -325,7 +329,7 @@ public class App {
         tokens.add(tok17);
 
         Regla funcion1 = new Funcion("Funcion");
-      //  arbolSemantico.insertItem2(funcion1);
+        //  arbolSemantico.insertItem2(funcion1);
 
         arbolSemantico.imprimirArbol();
         arbolSemantico.imprimirTablas();

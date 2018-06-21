@@ -49,7 +49,11 @@ public class Parametros implements Regla {
         this.expresiones = expresiones;
     }
 
-    public void setScope(int nivel){this.scope = nivel;}
+    public void setScope(int nivel) {
+        this.scope = nivel;
+    }
 
-    public int getScope() {return this.scope;}
+    public int getScope() {
+        return this.scope;
+    }
 }

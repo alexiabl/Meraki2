@@ -9,6 +9,9 @@ public class BooleanoTipo implements Tipo {
     public String getIdentificador() {
         return this.identificador;
     }
-    public String  getValorR(){return "T";}
+
+    public String getValorR() {
+        return "T";
+    }
 
 }

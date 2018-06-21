@@ -22,4 +22,8 @@ public class TablaSimbolos {
         this.tabla = tabla;
     }
 
+    public void insertarATabla(Token tok) {
+        this.tabla.add(tok);
+    }
+
 }

@@ -19,5 +19,7 @@ public class Car extends CaracterTipo {
         return super.getIdentificador();
     }
 
-    public String  getValorR(){return "T";}
+    public String getValorR() {
+        return "T";
+    }
 }

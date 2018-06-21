@@ -52,11 +52,13 @@ public class Token implements Item {
         this.scope = scope;
     }
 
-    public String getValor() {
-        return this.valor.getIdentificador();
+    public Tipo getValor() {
+        return this.valor;
     }
 
-    public String getValorReal() {  return this.valor.getValorR(); }
+    public String getValorReal() {
+        return this.valor.getValorR();
+    }
 
     public void setValor(Tipo valor) {
         this.valor = valor;

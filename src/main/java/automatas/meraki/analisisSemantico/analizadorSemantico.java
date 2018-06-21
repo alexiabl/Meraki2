@@ -33,8 +33,7 @@ public class analizadorSemantico {
     //nueva función para verificar concordancia en asignaciones del mismo tipo
     //las asignaciones deben ser entre tipos compatibles
 
-    public boolean verificarTipos(Item tok0, Item tok3)
-    {
+    public boolean verificarTipos(Item tok0, Item tok3) {
         //TIPONUM -> NUMERO
         //TIPOTEXTO -> TEXTO
         //TIPOCAR -> CARACTER
@@ -42,18 +41,20 @@ public class analizadorSemantico {
         boolean tipoCorrecto = false;
         Token token = (Token) tok0;
         Token token2 = (Token) tok3;
-        if(token.getTipoToken() == TIPONUM && token2.getTipoToken() == NUMERO) { tipoCorrecto = true; }
-        else if(token.getTipoToken() == TIPOTEXTO && token2.getTipoToken() == TEXTO) { tipoCorrecto = true; }
-        else if(token.getTipoToken() == TIPOCAR && token2.getTipoToken() == CARACTER) { tipoCorrecto = true; }
-        else if(token.getTipoToken() == TIPOBOOL && (token2.getTipoToken() == VERDADERO || token2.getTipoToken() == FALSO  ) ) { tipoCorrecto = true; }
-        else
-        {
-            System.out.println("tipos diferentes "+token.getTipoToken()+" y "+token2.getTipoToken());
+        if (token.getTipoToken() == TIPONUM && token2.getTipoToken() == NUMERO) {
+            tipoCorrecto = true;
+        } else if (token.getTipoToken() == TIPOTEXTO && token2.getTipoToken() == TEXTO) {
+            tipoCorrecto = true;
+        } else if (token.getTipoToken() == TIPOCAR && token2.getTipoToken() == CARACTER) {
+            tipoCorrecto = true;
+        } else if (token.getTipoToken() == TIPOBOOL && (token2.getTipoToken() == VERDADERO || token2.getTipoToken() == FALSO)) {
+            tipoCorrecto = true;
+        } else {
+            System.out.println("tipos diferentes " + token.getTipoToken() + " y " + token2.getTipoToken());
             System.out.println("Mae, esa asignacion esta incorrecta, fijate en el tipo: ");
         }
-        if(tipoCorrecto)
-        {
-            System.out.println("tipos iguales "+token.getTipoToken()+" y "+token2.getTipoToken());
+        if (tipoCorrecto) {
+            System.out.println("tipos iguales " + token.getTipoToken() + " y " + token2.getTipoToken());
         }
         return tipoCorrecto;
     }
@@ -62,12 +63,11 @@ public class analizadorSemantico {
     {
         //if(regla instance of Funcion)
         //para cada función verificar sus parámetros
-        if(((Token) funcion).getTipoToken() == ((Token) devolucion).getTipoToken()) {
+        if (((Token) funcion).getTipoToken() == ((Token) devolucion).getTipoToken()) {
             System.out.println("tipos iguales " + ((Token) funcion).getTipoToken() + " y " + ((Token) devolucion).getTipoToken());
             return true;
-        }
-        else {
-            System.out.println("tipos diferentes " + ((Token) funcion).getTipoToken()+ " y " + ((Token) devolucion).getTipoToken());
+        } else {
+            System.out.println("tipos diferentes " + ((Token) funcion).getTipoToken() + " y " + ((Token) devolucion).getTipoToken());
             System.out.println("Oh no! Esto no es lo que deberia devolver: " + ((Token) funcion).getTipoToken());
             return false;
         }

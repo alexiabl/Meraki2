@@ -29,11 +29,12 @@ public class EstructuraArbol {
     private List<Regla> asignaciones;
     private List<Regla> funciones;
     private List<Regla> declaraciones;
+    private analizadorSemantico analizadorSemantico;
 
 
     public EstructuraArbol() {
         this.scopeCounter = 1;
-        Regla regla = new Asignacion("Asignacion");
+        Regla regla = new Meraki("Meraki");
         this.arbol = new PointerTree<Regla>(regla);
         this.nodoActual = this.arbol.getRoot();
         this.niveles = 1;
@@ -42,6 +43,7 @@ public class EstructuraArbol {
         this.asignaciones = new LinkedList<Regla>();
         this.funciones = new LinkedList<Regla>();
         this.declaraciones = new LinkedList<Regla>();
+        this.analizadorSemantico = new analizadorSemantico(this);
 
     }
 
@@ -54,42 +56,60 @@ public class EstructuraArbol {
     }
 
     public void insertItem2(Regla regla, int niveles) {
-            Node<Regla> nodoActual = this.nodoActual;
-            Regla reglaNodo = new Asignacion(regla.getIdentificador());
-            if(regla instanceof Asignacion)// verificarTipos(regla.getTokens().get(0),regla.getTokens().get(3));
-            //int niveles = 0;
-           // if niveles == 0 {
-            Node<Regla> nodoAsignacion = new PointerTreeNode<Regla>(reglaNodo, this.nodoActual);
-            this.nodoActual.addChild(nodoAsignacion); //Aqui esta agregando doble cuando hace el llamado recursivo
-       // }
-            for (int i = 0; i < regla.getTokens().size(); i++) {
-                Item itemPrevio = null;
-                if (i > 0) {
-                    itemPrevio = regla.getTokens().get(i - 1);
-                }
-                Item item = regla.getTokens().get(i);
-                if (item instanceof Token) {
-                    //agregar token a lista de tokens de nueva regla asignacion
-                    reglaNodo.agregarATokens(item);
+        Node<Regla> nodoActual = this.nodoActual;
+        Regla reglaNodo = new Asignacion(regla.getIdentificador());
 
-                    //si el item previo fue una Regla, tengo que devolverme de nivel
-                    if (itemPrevio != null && itemPrevio instanceof Regla) {
-                        for (int n = 0; n < niveles; n++) {
-                            this.nodoActual = this.nodoActual.getParent();
-                        }
-                    }
-                } else if (item instanceof Regla) { //esto en realidad deberia ser un metodo recursivo
-                    //nuevo nivel
-                    Regla reglaHijo = (Regla) item;
-                    reglaHijo.setTokens(((Regla) item).getTokens());
-                    Node<Regla> nodoHijo = new PointerTreeNode<Regla>(reglaHijo, nodoAsignacion);
-                    //nodoAsignacion.addChild(nodoHijo);
-                    this.nodoActual = nodoAsignacion;
-                    niveles++;
-                    this.insertItem2(reglaHijo,niveles);
-                    //Aqui se debe recorrer la lista de tokens de la Regla hijo para verificar si se debe crear otro nivel
-                }
+        if (regla instanceof Asignacion || regla instanceof Declaracion) {
+            //  this.analizadorSemantico.verificarTipos(regla.getTokens().get(0),regla.getTokens().get(3));
+            Token tokenTipo = (Token) regla.getTokens().get(0);
+            Token tokenVar = (Token) regla.getTokens().get(1);
+            Token tokenTabla = new Token(tokenTipo.getTipoToken(), tokenTipo.getNumLinea(), tokenVar.getValor());
+            this.tablaSimbolos.insertarATabla(tokenTabla);
+        } else if (regla instanceof Funcion) {
+            Token tokenTipo = (Token) regla.getTokens().get(0);
+            Token tokenVar = (Token) regla.getTokens().get(1);
+            Token tokenTabla = new Token(tokenTipo.getTipoToken(), tokenTipo.getNumLinea(), tokenVar.getValor());
+            this.tablaFunciones.insertarATabla(tokenTabla);
+        } else if (regla instanceof Parametros && regla != null) {
+            Token tokenTipo = (Token) regla.getTokens().get(0);
+            Token tokenVar = (Token) regla.getTokens().get(1);
+            Token tokenTabla = new Token(tokenTipo.getTipoToken(), tokenTipo.getNumLinea(), tokenVar.getValor());
+            this.tablaSimbolos.insertarATabla(tokenTabla);
+        }
+
+        Node<Regla> nodoAsignacion = new PointerTreeNode<Regla>(reglaNodo, this.nodoActual);
+        this.nodoActual.addChild(nodoAsignacion); //Aqui esta agregando doble cuando hace el llamado recursivo
+        // }
+        for (int i = 0; i < regla.getTokens().size(); i++) {
+            Item itemPrevio = null;
+            if (i > 0) {
+                itemPrevio = regla.getTokens().get(i - 1);
             }
+            Item item = regla.getTokens().get(i);
+            if (item instanceof Token) {
+                //agregar token a lista de tokens de nueva regla asignacion
+                reglaNodo.agregarATokens(item);
+
+                //si el item previo fue una Regla, tengo que devolverme de nivel
+                if (itemPrevio != null && itemPrevio instanceof Regla) {
+                    System.out.println(("   " + ((Regla) itemPrevio).getIdentificador()));
+                    for (int n = 0; n < niveles; n++) {
+                        this.nodoActual = this.nodoActual.getParent();
+                    }
+                }
+            } else if (item instanceof Regla) {
+                //nuevo nivel
+                Regla reglaHijo = (Regla) item;
+                reglaHijo.setTokens(((Regla) item).getTokens());
+                Node<Regla> nodoHijo = new PointerTreeNode<Regla>(reglaHijo, nodoAsignacion);
+                //nodoAsignacion.addChild(nodoHijo);
+                this.nodoActual = nodoAsignacion;
+                niveles++;
+                this.insertItem2(reglaHijo, niveles);
+                niveles--;
+            }
+            System.out.println(regla.getIdentificador());
+        }
     }
 
     public void revisarReglaRecursivo(Regla reglaActual) {
@@ -183,29 +203,42 @@ public class EstructuraArbol {
 
 
     public void imprimirArbol() {
-        List<Node<Regla>> imprimirArbol = getInDepthTraversal(this.arbol);
+        List<Node<Regla>> imprimirArbol = getLevelTraversal(this.arbol);
         for (int i = 0; i < imprimirArbol.size(); i++) {
             System.out.println("Regla: " + imprimirArbol.get(i).getLabel().getIdentificador());
             Node<Regla> current = imprimirArbol.get(i);
             if (current.getChildren().size() > 0) {
                 for (int j = 0; j < current.getChildren().size(); j++) {
-                    System.out.println("Hijo: " + current.getChildren().get(j).getLabel().getIdentificador());
+                    System.out.println("    Hijo: " + current.getChildren().get(j).getLabel().getIdentificador());
                 }
             }
         }
     }
 
-    public void imprimirTablas() {
+    public void imprimirTablaSimbolos() {
         List<Token> tablaAsig = this.tablaSimbolos.getTabla();
         System.out.println("Tabla de Simbolos:");
         for (int i = 0; i < tablaAsig.size(); i++) {                                                                      //OBTENER VALOR REAL de token
-             if(tablaAsig.get(i).getNumLineaFinal()!= 0){
-                System.out.println("Función Tipo: " + tablaAsig.get(i).getTipoToken() + " Valor: " + tablaAsig.get(i).getValorReal() + " Linea Inicial: " + tablaAsig.get(i).getNumLinea() + " Linea Final: " + tablaAsig.get(i).getNumLineaFinal()) ;
-            }
-            else{
-                 System.out.println("Variable Tipo: " + tablaAsig.get(i).getTipoToken() + " Valor: " + tablaAsig.get(i).getValorReal() + " Linea: " + tablaAsig.get(i).getNumLinea());
+            if (tablaAsig.get(i).getNumLineaFinal() != 0) {
+                System.out.println("Función Tipo: " + tablaAsig.get(i).getTipoToken() + " Valor: " + tablaAsig.get(i).getValorReal() + " Linea Inicial: " + tablaAsig.get(i).getNumLinea() + " Linea Final: " + tablaAsig.get(i).getNumLineaFinal());
+            } else {
+                System.out.println("Variable Tipo: " + tablaAsig.get(i).getTipoToken() + " Valor: " + tablaAsig.get(i).getValorReal() + " Linea: " + tablaAsig.get(i).getNumLinea());
 
-             }
+            }
+
+        }
+    }
+
+    public void imprimirTablaSimbolosFunciones() {
+        List<Token> tablaFuncion = this.tablaFunciones.getTabla();
+        System.out.println("Tabla de Simbolos:");
+        for (int i = 0; i < tablaFuncion.size(); i++) {                                                                      //OBTENER VALOR REAL de token
+            if (tablaFuncion.get(i).getNumLineaFinal() != 0) {
+                System.out.println("Función Tipo: " + tablaFuncion.get(i).getTipoToken() + " Valor: " + tablaFuncion.get(i).getValorReal() + " Linea Inicial: " + tablaFuncion.get(i).getNumLinea() + " Linea Final: " + tablaFuncion.get(i).getNumLineaFinal());
+            } else {
+                System.out.println("Variable Tipo: " + tablaFuncion.get(i).getTipoToken() + " Valor: " + tablaFuncion.get(i).getValorReal() + " Linea: " + tablaFuncion.get(i).getNumLinea());
+
+            }
 
         }
     }
@@ -243,7 +276,7 @@ public class EstructuraArbol {
 
     public static <T> List<Node<T>> getInDepthTraversal(Tree<T> tree) {
         List<Node<T>> list = new LinkedList<Node<T>>();
-        Node current = tree.getRoot();
+        Node<T> current = tree.getRoot();
         list.add(current);
         int cont = 0;
         while (cont < tree.getRoot().getChildren().size()) {

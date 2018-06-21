@@ -36,8 +36,8 @@ public class Terminal extends Token {
         this.scope = scope;
     }
 
-    public String getValor() {
-        return this.valor.getIdentificador();
+    public Tipo getValor() {
+        return this.valor;
     }
 
     public void setValor(Tipo valor) {

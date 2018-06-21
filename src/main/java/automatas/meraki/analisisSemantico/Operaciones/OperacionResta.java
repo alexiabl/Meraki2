@@ -22,6 +22,10 @@ public class OperacionResta implements Regla {
         this.ladoIzq = ladoIzq;
     }
 
+    public OperacionResta() {
+
+    }
+
     public Tipo getLadoIzq() {
         return this.ladoIzq;
     }

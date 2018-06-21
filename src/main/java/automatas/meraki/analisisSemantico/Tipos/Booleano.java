@@ -19,5 +19,7 @@ public class Booleano extends BooleanoTipo {
         return super.getIdentificador();
     }
 
-    public String  getValorR(){return "T";}
+    public String getValorR() {
+        return "T";
+    }
 }
