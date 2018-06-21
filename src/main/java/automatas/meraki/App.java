@@ -194,7 +194,7 @@ public class App {
         //
 
         Token tok25 = new Token(TipoTokenTerminal.LLAVEF, 11, new Car('}')); //tkf
-        Regla regla10 = new Funcion("Funcion");
+        Regla funcion = new Funcion("Funcion");
         List<Item> tokensFuncion = new LinkedList<Item>();
         tokensFuncion.add(tok1);
         tokensFuncion.add(tok2);
@@ -205,11 +205,42 @@ public class App {
         tokensFuncion.add(regla2);
         tokensFuncion.add(regla4);
         tokensFuncion.add(tok25);
-        regla10.setTokens(tokensFuncion);
+        funcion.setTokens(tokensFuncion);
+
+        //Inicio main
+        Token tok35 = new Token(TipoTokenTerminal.MAIN,12,new Texto("main"));
+        Token tok36 = new Token(TipoTokenTerminal.PI, 12, new Car('('));
+        Token tok37 = new Token(TipoTokenTerminal.PF, 12, new Car(')'));
+        Token tok38 = new Token(TipoTokenTerminal.LLAVEI, 12, new Car('{'));
+        Token tok39 = new Token(TipoTokenTerminal.LLAVEF, 14, new Car('}'));
+            //Llamado
+        Regla llamado = new Llamado("Llamado");
+        Item tokRegla14 = new Token(TipoTokenTerminal.N_VAR, 13, new Texto("fibonacci"));
+        Item tokRegla15 = new Token(TipoTokenTerminal.NUMERO, 13, new NumEntero(5));
+        List<Item> tokensReglaLlamado3 = new LinkedList<Item>();
+        tokensReglaLlamado3.add(tokRegla14);
+        tokensReglaLlamado3.add(tokRegla15);
+        llamado.setTokens(tokensReglaLlamado3);
+
+        Regla main = new Main("Main");
+        List<Item> tokensReglaMain = new LinkedList<Item>();
+        tokensReglaMain.add(tok35);
+        tokensReglaMain.add(tok36);
+        tokensReglaMain.add(tok37);
+        tokensReglaMain.add(tok38);
+        tokensReglaMain.add(llamado);
+        tokensReglaMain.add(tok39);
+        main.setTokens(tokensReglaMain);
+
+        Regla meraki = new Meraki("Meraki");
+        List<Item> tokensReglaMeraki = new LinkedList<Item>();
+        tokensReglaMeraki.add(funcion);
+        tokensReglaMeraki.add(main);
+        meraki.setTokens(tokensReglaMeraki);
 
         EstructuraArbol arbolSemantico = new EstructuraArbol();
 
-        arbolSemantico.insertItem2(regla10,0);
+        arbolSemantico.insertItem2(meraki,0);
 
         Token tok40 = new Token(TipoTokenTerminal.LLAVEF, 11, new Car('.')); //tkf
 
