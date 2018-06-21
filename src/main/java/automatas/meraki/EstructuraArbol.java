@@ -11,13 +11,12 @@ import automatas.meraki.arbol.PointerTree;
 import automatas.meraki.arbol.PointerTreeNode;
 import automatas.meraki.arbol.Tree;
 import com.sun.jmx.remote.internal.ArrayQueue;
+import automatas.meraki.analisisSemantico.analizadorSemantico;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import static automatas.meraki.analisisSemantico.TipoTokenTerminal.TIPOCAR;
-import static automatas.meraki.analisisSemantico.TipoTokenTerminal.TIPONUM;
-import static automatas.meraki.analisisSemantico.TipoTokenTerminal.TIPOTEXTO;
+import static automatas.meraki.analisisSemantico.TipoTokenTerminal.*;
 
 public class EstructuraArbol {
 
@@ -57,6 +56,7 @@ public class EstructuraArbol {
     public void insertItem2(Regla regla, int niveles) {
             Node<Regla> nodoActual = this.nodoActual;
             Regla reglaNodo = new Asignacion(regla.getIdentificador());
+            if(regla instanceof Asignacion)// verificarTipos(regla.getTokens().get(0),regla.getTokens().get(3));
             //int niveles = 0;
            // if niveles == 0 {
             Node<Regla> nodoAsignacion = new PointerTreeNode<Regla>(reglaNodo, this.nodoActual);
@@ -181,29 +181,6 @@ public class EstructuraArbol {
         this.tablaSimbolos.getTabla().add(tok);
     }
 
-    //nueva función para verificar concordancia en asignaciones del mismo tipo
-    public boolean verificarTipos(List<Token> asign)
-    {
-        //TIPONUM -> NUMERO
-        //TIPOTEXTO -> TEXTO
-        //TIPOCAR -> CARACTER
-        //TIPOBOOL -> VERDADERO || FALSO
-        boolean tipoCorrecto = false;
-        if(asign.get(0).getTipoToken() == TIPONUM && asign.get(3).getValor() == "NUMERO") { tipoCorrecto = true; }
-        else if(asign.get(0).getTipoToken() == TIPOTEXTO && asign.get(3).getValor() == "TEXTO") { tipoCorrecto = true; }
-        else if(asign.get(0).getTipoToken() == TIPOCAR && asign.get(3).getValor() == "CARACTER") { tipoCorrecto = true; }
-       // else if(asign.get(0).getTipoToken()) == TIPOBOOL && (asign.get(3).getValor() == "VERDADERO " || asign.get(3).getValor() == "FALSO"  ) ) { tipoCorrecto = true; }
-        else
-        {
-            System.out.println("tipos diferentes "+asign.get(0).getTipoToken()+" y "+asign.get(3).getValor());
-            tipoCorrecto = false;
-        }
-        if(tipoCorrecto==true)
-        {
-            System.out.println("tipos iguales "+asign.get(0).getTipoToken()+" y "+asign.get(3).getValor());
-        }
-        return tipoCorrecto;
-    }
 
     public void imprimirArbol() {
         List<Node<Regla>> imprimirArbol = getInDepthTraversal(this.arbol);

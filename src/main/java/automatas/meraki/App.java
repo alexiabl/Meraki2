@@ -21,6 +21,7 @@ public class App {
         Item tok3 = new Token(TipoTokenTerminal.SIGUAL, 1, new Car('='));
         //Item tok4 = new Token(TipoTokenTerminal.NUMERO, 1, new NumEntero(5));
 
+
         Regla regla1 = new OperacionDivision("OperacionDivision");
         Item tokRegla1 = new Token(TipoTokenTerminal.NUMERO, 1, new NumEntero(5));
         Item tokRegla2 = new Token(TipoTokenTerminal.NUMERO, 1, new NumEntero(6));
@@ -34,6 +35,7 @@ public class App {
         tokensAsignacion.add(tok2);
         tokensAsignacion.add(tok3);
         tokensAsignacion.add(regla1);
+
         Regla asignacion = new Asignacion("Asignacion");
         asignacion.setTokens(tokensAsignacion);
 
@@ -41,6 +43,7 @@ public class App {
         EstructuraArbol arbolSemantico = new EstructuraArbol();
 
         arbolSemantico.insertItem2(asignacion,0);
+
 
         Token tok5 = new Token(TipoTokenTerminal.TIPONUM, 2, new NumeroTipo());
         Token tok6 = new Token(TipoTokenTerminal.N_FUNC, 2, new Texto("galleta"));

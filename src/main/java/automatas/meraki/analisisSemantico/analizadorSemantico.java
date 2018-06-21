@@ -5,6 +5,10 @@ import automatas.meraki.analisisSemantico.Reglas.Regla;
 
 import java.util.List;
 
+import static automatas.meraki.analisisSemantico.TipoTokenTerminal.*;
+import static automatas.meraki.analisisSemantico.TipoTokenTerminal.FALSO;
+import static automatas.meraki.analisisSemantico.TipoTokenTerminal.VERDADERO;
+
 /**
  * Created by alexiaborchgrevink on 6/13/18.
  */
@@ -25,6 +29,34 @@ public class analizadorSemantico {
     //para las asignaciones reviso el arbol
     //para las declaraciones reviso tabla de simbolos
 
+
+    //nueva función para verificar concordancia en asignaciones del mismo tipo
+    //las asignaciones deben ser entre tipos compatibles
+
+    public boolean verificarTipos(Item tok0, Item tok3)
+    {
+        //TIPONUM -> NUMERO
+        //TIPOTEXTO -> TEXTO
+        //TIPOCAR -> CARACTER
+        //TIPOBOOL -> VERDADERO || FALSO
+        boolean tipoCorrecto = false;
+        Token token = (Token) tok0;
+        Token token2 = (Token) tok3;
+        if(token.getTipoToken() == TIPONUM && token2.getTipoToken() == NUMERO) { tipoCorrecto = true; }
+        else if(token.getTipoToken() == TIPOTEXTO && token2.getTipoToken() == TEXTO) { tipoCorrecto = true; }
+        else if(token.getTipoToken() == TIPOCAR && token2.getTipoToken() == CARACTER) { tipoCorrecto = true; }
+        else if(token.getTipoToken() == TIPOBOOL && (token2.getTipoToken() == VERDADERO || token2.getTipoToken() == FALSO  ) ) { tipoCorrecto = true; }
+        else
+        {
+            System.out.println("tipos diferentes "+token.getTipoToken()+" y "+token2.getTipoToken());
+            tipoCorrecto = false;
+        }
+        if(tipoCorrecto==true)
+        {
+            System.out.println("tipos iguales "+token.getTipoToken()+" y "+token2.getTipoToken());
+        }
+        return tipoCorrecto;
+    }
 
     public void revisarDeclaraciones() {
         /*
