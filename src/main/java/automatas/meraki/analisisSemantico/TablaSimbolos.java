@@ -1,5 +1,7 @@
 package automatas.meraki.analisisSemantico;
 
+import automatas.meraki.analisisSemantico.Reglas.Regla;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,4 +28,5 @@ public class TablaSimbolos {
         this.tabla.add(tok);
     }
 
+    //public List<Token>
 }

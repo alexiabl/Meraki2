@@ -67,8 +67,11 @@ public class EstructuraArbol {
             this.tablaSimbolos.insertarATabla(tokenTabla);
         } else if (regla instanceof Funcion) {
             Token tokenTipo = (Token) regla.getTokens().get(0);
+            Token fin = (Token)regla.getTokens().get(regla.getTokens().size()-1);
+            tokenTipo.setNumLineaFinal(fin.getNumLinea());
             Token tokenVar = (Token) regla.getTokens().get(1);
-            Token tokenTabla = new Token(tokenTipo.getTipoToken(), tokenTipo.getNumLinea(), tokenVar.getValor());
+
+            Token tokenTabla = new Token(tokenTipo.getTipoToken(), tokenTipo.getNumLinea(), tokenTipo.getNumLineaFinal(), tokenVar.getValor());
             this.tablaFunciones.insertarATabla(tokenTabla);
         } else if (regla instanceof Parametros && regla != null) {
             Token tokenTipo = (Token) regla.getTokens().get(0);
@@ -112,91 +115,6 @@ public class EstructuraArbol {
         }
     }
 
-    public void revisarReglaRecursivo(Regla reglaActual) {
-
-    }
-
-    /*
-    public void insertItem(Regla regla) {
-        boolean nuevoNivel = true;
-        Regla reglaActual = regla;
-        Node<Regla> nodoHijo = this.nodoActual;
-        String tipoRegla = regla.getIdentificador();
-        if (tipoRegla.equals("Asignacion")) {
-            //for (Token token : regla.getTokens()) {
-                //if (token.getTipoToken().equals(TipoTokenTerminal.N_VAR)) {
-                    Token toktemp = regla.getTokens().get(1);
-                    toktemp.setTipoToken(regla.getTokens().get(0).getTipoToken());
-                   // Token tok1 = new Token(regla.getTokens().get(0).getTipoToken(),regla.getTokens().get(0).getNumLinea(),new Texto("Temp"));
-                    verificarTipos(regla.getTokens());
-                    insertarATabla(toktemp);
-                        //break;
-               // }
-           // }
-            this.asignaciones.add(regla);
-        }
-        if (tipoRegla.equals("Declaracion")) {
-         //   for (Token token : regla.getTokens()) {
-               // if (token.getTipoToken().equals(TipoTokenTerminal.N_VAR)) {
-            Token toktemp = regla.getTokens().get(1);
-            toktemp.setTipoToken(regla.getTokens().get(0).getTipoToken());
-            verificarTipos(regla.getTokens());
-            insertarATabla(toktemp);
-                //    break;
-               // }
-            //}
-            this.declaraciones.add(regla);
-        }
-        if (tipoRegla.equals("Funcion")) {
-           // for (Token token : regla.getTokens()) {
-            //    if (token.getTipoToken().equals(TipoTokenTerminal.N_FUNC)) {
-                    Token toktemp = regla.getTokens().get(1);
-                    toktemp.setTipoToken(regla.getTokens().get(0).getTipoToken());
-                    toktemp.setNumLineaFinal(regla.getTokens().get(regla.getTokens().size()-1).getNumLinea());
-
-                   // System.out.println(regla.getTokens().size()-1);
-                    //System.out.println(regla.getTokens().get(regla.getTokens().size()-1).getNumLinea());
-                    verificarTipos(regla.getTokens());
-                    insertarATabla(toktemp);
-
-              //  } else if (token.getTipoToken().equals(TipoTokenTerminal.N_VAR)) {
-
-            //    }
-          //  }
-            this.funciones.add(regla);
-        }
-        for (int i = 0; i < regla.getTokens().size(); i++) {
-            Token tok = regla.getTokens().get(i);
-            Node<Regla> nodo = this.nodoActual;
-            if (tok.getTipoToken().equals(TipoTokenTerminal.LLAVEI)) {
-                this.scopeCounter++;
-                tok.setScope(this.scopeCounter);
-                List<Token> nextTokens = new LinkedList<Token>();
-                for (int j = i; j < regla.getTokens().size(); j++) {
-                    regla.getTokens().get(j).setScope(this.scopeCounter);
-                    nextTokens.add(regla.getTokens().get(j));
-                }
-                Regla bloque = new BloqueCodigo("BloqueCodigo", nextTokens);
-                reglaActual = bloque;
-                Node<Regla> nuevoNodo = new PointerTreeNode<Regla>(bloque, nodoHijo);
-                nodoHijo.addChild(nuevoNodo);
-                nodo = nuevoNodo;
-                this.nodoActual = nodo;
-                this.niveles++;
-            }
-            if (nuevoNivel) {
-                Node<Regla> nodoRegla = new PointerTreeNode<Regla>(reglaActual, this.nodoActual);
-                this.nodoActual.addChild(nodoRegla);
-                nodoHijo = nodoRegla;
-                nuevoNivel = false;
-            } else if (tok.getTipoToken().equals(TipoTokenTerminal.LLAVEF)) {
-                for (int k = 0; k < this.niveles; k++) {
-                    this.nodoActual = this.nodoActual.getParent();
-                }
-            }
-        }
-    }*/
-
     public void insertarATabla(Token tok) {
         this.tablaSimbolos.getTabla().add(tok);
     }
@@ -231,15 +149,12 @@ public class EstructuraArbol {
 
     public void imprimirTablaSimbolosFunciones() {
         List<Token> tablaFuncion = this.tablaFunciones.getTabla();
-        System.out.println("Tabla de Simbolos:");
+        System.out.println("Tabla de Funciones:");
         for (int i = 0; i < tablaFuncion.size(); i++) {                                                                      //OBTENER VALOR REAL de token
-            if (tablaFuncion.get(i).getNumLineaFinal() != 0) {
-                System.out.println("Función Tipo: " + tablaFuncion.get(i).getTipoToken() + " Valor: " + tablaFuncion.get(i).getValorReal() + " Linea Inicial: " + tablaFuncion.get(i).getNumLinea() + " Linea Final: " + tablaFuncion.get(i).getNumLineaFinal());
-            } else {
-                System.out.println("Variable Tipo: " + tablaFuncion.get(i).getTipoToken() + " Valor: " + tablaFuncion.get(i).getValorReal() + " Linea: " + tablaFuncion.get(i).getNumLinea());
 
-            }
-
+                System.out.println("Función Tipo: " + tablaFuncion.get(i).getTipoToken() +
+                        " Nombre: " + tablaFuncion.get(i).getValorReal() + " Linea Inicial: "
+                        + tablaFuncion.get(i).getNumLinea() + " Linea Final: " + tablaFuncion.get(i).getNumLineaFinal());
         }
     }
 
