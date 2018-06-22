@@ -71,6 +71,8 @@ public class EstructuraArbol {
             tokenTipo.setNumLineaFinal(fin.getNumLinea());
             Token tokenVar = (Token) regla.getTokens().get(1);
 
+            this.analizadorSemantico.revisarDevoluciones(((Funcion) regla).getDev(),tokenTipo.getValorReal());
+
             Token tokenTabla = new Token(tokenTipo.getTipoToken(), tokenTipo.getNumLinea(), tokenTipo.getNumLineaFinal(), tokenVar.getValor());
             this.tablaFunciones.insertarATabla(tokenTabla);
         } else if (regla instanceof Parametros && regla != null) {

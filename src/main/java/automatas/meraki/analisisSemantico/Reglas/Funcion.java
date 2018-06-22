@@ -26,9 +26,9 @@ public class Funcion implements Regla {
 
     public void setDev(List<Item> listaD) {this.listaDevuelva = listaD;}
 
-    public List<Item> getParam(List<Item> listaP) {return this.listaParametros;}
+    public List<Item> getParam() {return this.listaParametros;}
 
-    public List<Item> getDev(List<Item> listaD) {return this.listaDevuelva;}
+    public List<Item> getDev() {return this.listaDevuelva;}
 
     public List<Item> getTokens() {
         return tokens;

@@ -2,6 +2,7 @@ package automatas.meraki.analisisSemantico;
 
 import automatas.meraki.EstructuraArbol;
 import automatas.meraki.analisisSemantico.Reglas.Regla;
+import automatas.meraki.analisisSemantico.Tipos.Tipo;
 
 import java.util.List;
 
@@ -59,10 +60,9 @@ public class analizadorSemantico {
         return tipoCorrecto;
     }
 
-    public boolean revisarDevoluciones(Regla funcion) //devolver el tipo de dato que indican
+    public boolean revisarDevoluciones(List<Item> devolucion, String tipo) //devolver el tipo de dato que indican
     {
-        //if(regla instance of Funcion)
-        //para cada función verificar sus parámetros
+        //if (devolucion.get(1) == tipo )
 
        /* if (((Token) funcion).getTipoToken() == ((Token) devolucion).getTipoToken()) {
             System.out.println("tipos iguales " + ((Token) funcion).getTipoToken() + " y " + ((Token) devolucion).getTipoToken());
