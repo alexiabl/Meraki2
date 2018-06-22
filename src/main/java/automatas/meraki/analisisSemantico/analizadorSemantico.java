@@ -2,7 +2,6 @@ package automatas.meraki.analisisSemantico;
 
 import automatas.meraki.EstructuraArbol;
 import automatas.meraki.analisisSemantico.Reglas.Regla;
-import automatas.meraki.analisisSemantico.Tipos.Tipo;
 
 import java.util.List;
 
@@ -34,45 +33,45 @@ public class analizadorSemantico {
     //nueva función para verificar concordancia en asignaciones del mismo tipo
     //las asignaciones deben ser entre tipos compatibles
 
-    public boolean verificarTipos(Item tok0, Item tok3) {
+    public boolean verificarTipos(TipoTokenTerminal tok0, TipoTokenTerminal tok3) {
         //TIPONUM -> NUMERO
         //TIPOTEXTO -> TEXTO
         //TIPOCAR -> CARACTER
         //TIPOBOOL -> VERDADERO || FALSO
         boolean tipoCorrecto = false;
-        Token token = (Token) tok0;
-        Token token2 = (Token) tok3;
-        if (token.getTipoToken() == TIPONUM && token2.getTipoToken() == NUMERO) {
+        //Token token = (Token) tok0;
+       // Token token2 = (Token) tok3;
+        if (tok0 == TIPONUM && tok3 == NUMERO) {
             tipoCorrecto = true;
-        } else if (token.getTipoToken() == TIPOTEXTO && token2.getTipoToken() == TEXTO) {
+        } else if (tok0 == TIPOTEXTO && tok3 == TEXTO) {
             tipoCorrecto = true;
-        } else if (token.getTipoToken() == TIPOCAR && token2.getTipoToken() == CARACTER) {
+        } else if (tok0== TIPOCAR && tok3 == CARACTER) {
             tipoCorrecto = true;
-        } else if (token.getTipoToken() == TIPOBOOL && (token2.getTipoToken() == VERDADERO || token2.getTipoToken() == FALSO)) {
+        } else if (tok0 == TIPOBOOL && (tok3 == VERDADERO || tok3 == FALSO)) {
             tipoCorrecto = true;
         } else {
-            System.out.println("tipos diferentes " + token.getTipoToken() + " y " + token2.getTipoToken());
+            System.out.println("tipos diferentes " + tok0 + " y " + tok3);
             System.out.println("Mae, esa asignacion esta incorrecta, fijate en el tipo: ");
         }
         if (tipoCorrecto) {
-            System.out.println("tipos iguales " + token.getTipoToken() + " y " + token2.getTipoToken());
+            System.out.println("tipos iguales " + tok0 + " y " + tok3);
         }
         return tipoCorrecto;
     }
 
-    public boolean revisarDevoluciones(List<Item> devolucion, String tipo) //devolver el tipo de dato que indican
+    public boolean revisarDevoluciones( TipoTokenTerminal devolucion, TipoTokenTerminal original) //devolver el tipo de dato que indican
     {
-        //if (devolucion.get(1) == tipo )
 
-       /* if (((Token) funcion).getTipoToken() == ((Token) devolucion).getTipoToken()) {
-            System.out.println("tipos iguales " + ((Token) funcion).getTipoToken() + " y " + ((Token) devolucion).getTipoToken());
+        if(original == devolucion)
+        {
+            System.out.println("tipos iguales " + devolucion + " y " + original);
             return true;
         } else {
-            System.out.println("tipos diferentes " + ((Token) funcion).getTipoToken() + " y " + ((Token) devolucion).getTipoToken());
-            System.out.println("Oh no! Esto no es lo que deberia devolver: " + ((Token) funcion).getTipoToken());
+            System.out.println("tipos diferentes " + devolucion + " y " + original);
+            System.out.println("Oh no! Esto no es lo que deberia devolver: " + original);
             return false;
-        }*/
-       return  true;
+        }
+
     }
 
 

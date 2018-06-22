@@ -60,21 +60,31 @@ public class EstructuraArbol {
         Regla reglaNodo = new Asignacion(regla.getIdentificador());
 
         if (regla instanceof Asignacion || regla instanceof Declaracion) {
-            //  this.analizadorSemantico.verificarTipos(regla.getTokens().get(0),regla.getTokens().get(3));
             Token tokenTipo = (Token) regla.getTokens().get(0);
             Token tokenVar = (Token) regla.getTokens().get(1);
+
+            //problemas para enviar tercer token y verificar el tipo
+            // ejemplo numero n = 5; ocupo llegar a 5 para ver su tipo, que debe ser numero
+            this.analizadorSemantico.verificarTipos(tokenTipo.getTipoToken(),tokenVar.getTipoToken());
+
             Token tokenTabla = new Token(tokenTipo.getTipoToken(), tokenTipo.getNumLinea(), tokenVar.getValor());
             this.tablaSimbolos.insertarATabla(tokenTabla);
+
         } else if (regla instanceof Funcion) {
             Token tokenTipo = (Token) regla.getTokens().get(0);
             Token fin = (Token)regla.getTokens().get(regla.getTokens().size()-1);
             tokenTipo.setNumLineaFinal(fin.getNumLinea());
             Token tokenVar = (Token) regla.getTokens().get(1);
-
-            this.analizadorSemantico.revisarDevoluciones(((Funcion) regla).getDev(),tokenTipo.getValorReal());
-
             Token tokenTabla = new Token(tokenTipo.getTipoToken(), tokenTipo.getNumLinea(), tokenTipo.getNumLineaFinal(), tokenVar.getValor());
             this.tablaFunciones.insertarATabla(tokenTabla);
+
+            //problemas para encontrar el token que se necesita, similar al problema de arriba
+            List<Item> devolucion = ((Funcion) regla).getDev();
+            Token tok = (Token) devolucion.get(1);
+            TipoTokenTerminal n = buscarTipo(tok);
+
+            this.analizadorSemantico.revisarDevoluciones(n,tokenTipo.getTipoToken());
+
         } else if (regla instanceof Parametros && regla != null) {
             Token tokenTipo = (Token) regla.getTokens().get(0);
             Token tokenVar = (Token) regla.getTokens().get(1);
@@ -121,7 +131,22 @@ public class EstructuraArbol {
         this.tablaSimbolos.getTabla().add(tok);
     }
 
-
+    public TipoTokenTerminal buscarTipo(Token n)
+    {
+        TipoTokenTerminal buscado=null;
+        List<Token> tablaAsig = this.tablaSimbolos.getTabla();
+        int i = 0;
+        while( i < tablaAsig.size() )  {
+            if (tablaAsig.get(i).getNumLineaFinal() == 0) {
+                if (tablaAsig.get(i).getValorReal() == n.getValorReal()) {
+                    System.out.println("Variable Tipo: " + tablaAsig.get(i).getTipoToken());
+                    buscado = tablaAsig.get(i).getTipoToken();
+                }
+            }
+            i++;
+        }
+        return buscado;
+    }
     public void imprimirArbol() {
         List<Node<Regla>> imprimirArbol = getLevelTraversal(this.arbol);
         for (int i = 0; i < imprimirArbol.size(); i++) {
