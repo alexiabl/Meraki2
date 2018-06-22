@@ -59,18 +59,20 @@ public class analizadorSemantico {
         return tipoCorrecto;
     }
 
-    public boolean revisarDevoluciones(Item funcion, Item devolucion) //devolver el tipo de dato que indican
+    public boolean revisarDevoluciones(Regla funcion) //devolver el tipo de dato que indican
     {
         //if(regla instance of Funcion)
         //para cada función verificar sus parámetros
-        if (((Token) funcion).getTipoToken() == ((Token) devolucion).getTipoToken()) {
+
+       /* if (((Token) funcion).getTipoToken() == ((Token) devolucion).getTipoToken()) {
             System.out.println("tipos iguales " + ((Token) funcion).getTipoToken() + " y " + ((Token) devolucion).getTipoToken());
             return true;
         } else {
             System.out.println("tipos diferentes " + ((Token) funcion).getTipoToken() + " y " + ((Token) devolucion).getTipoToken());
             System.out.println("Oh no! Esto no es lo que deberia devolver: " + ((Token) funcion).getTipoToken());
             return false;
-        }
+        }*/
+       return  true;
     }
 
 

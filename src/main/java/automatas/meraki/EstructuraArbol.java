@@ -150,8 +150,7 @@ public class EstructuraArbol {
     public void imprimirTablaSimbolosFunciones() {
         List<Token> tablaFuncion = this.tablaFunciones.getTabla();
         System.out.println("Tabla de Funciones:");
-        for (int i = 0; i < tablaFuncion.size(); i++) {                                                                      //OBTENER VALOR REAL de token
-
+        for (int i = 0; i < tablaFuncion.size(); i++) {
                 System.out.println("Función Tipo: " + tablaFuncion.get(i).getTipoToken() +
                         " Nombre: " + tablaFuncion.get(i).getValorReal() + " Linea Inicial: "
                         + tablaFuncion.get(i).getNumLinea() + " Linea Final: " + tablaFuncion.get(i).getNumLineaFinal());

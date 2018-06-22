@@ -69,7 +69,7 @@ public class App {
 
         //Inicio Devuelva
         Regla regla3 = new Devuelva("Devuelva");
-        Token tok10 =  new Token(TipoTokenTerminal.DEVUELVA,3, new Texto("Devuelva"));
+        Token tok10 =  new Token(TipoTokenTerminal.DEVUELVA,3, 3,new Texto("Devuelva"));
         Token tok11 = new Token(TipoTokenTerminal.N_VAR, 3, new Texto("n"));
         List<Item> tokensReglaDevuelva1 = new LinkedList<Item>();
         tokensReglaDevuelva1.add(tok10);
@@ -207,6 +207,8 @@ public class App {
         tokensFuncion.add(tok25);
         funcion.setTokens(tokensFuncion);
 
+        ((Funcion) funcion).setParam(regla1.getTokens());
+        ((Funcion) funcion).setDev(regla11.getTokens());
         //Inicio main
         Token tok35 = new Token(TipoTokenTerminal.MAIN,12,new Texto("main"));
         Token tok36 = new Token(TipoTokenTerminal.PI, 12, new Car('('));

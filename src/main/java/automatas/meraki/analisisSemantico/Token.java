@@ -15,8 +15,6 @@ public class Token implements Item {
     private int scope;
     private Tipo valor;
     private List<Token> lista;
-    private List<Token> listaParametros;
-    private List<Token> listaDevuelva;
 
     public Token(TipoTokenTerminal tipoTokenTerminal, int numLinea, Tipo valor) {
         this.tipoToken = tipoTokenTerminal;
@@ -31,9 +29,6 @@ public Token(TipoTokenTerminal tipoTokenTerminal, int numLinea, int numFinal,Tip
         this.valor = valor;
     }
 
-    public void setParam(List<Token> listaP) {this.listaParametros = listaP;}
-
-    public void setDev(List<Token> listaD) {this.listaDevuelva = listaD;}
 
     public Object getTipo() {
         return this.tipoToken;
