@@ -81,9 +81,11 @@ public class EstructuraArbol {
             //problemas para encontrar el token que se necesita, similar al problema de arriba
             List<Item> devolucion = ((Funcion) regla).getDev();
             Token tok = (Token) devolucion.get(1);
+
+            System.out.println("devolución: "+ ((Funcion) regla).devolucion());
             TipoTokenTerminal n = buscarTipo(tok);
 
-            this.analizadorSemantico.revisarDevoluciones(n,tokenTipo.getTipoToken());
+            this.analizadorSemantico.revisarDevoluciones(tok.getTipoToken(),tokenTipo.getTipoToken());
 
         } else if (regla instanceof Parametros && regla != null) {
             Token tokenTipo = (Token) regla.getTokens().get(0);
@@ -147,6 +149,7 @@ public class EstructuraArbol {
         }
         return buscado;
     }
+
     public void imprimirArbol() {
         List<Node<Regla>> imprimirArbol = getLevelTraversal(this.arbol);
         for (int i = 0; i < imprimirArbol.size(); i++) {

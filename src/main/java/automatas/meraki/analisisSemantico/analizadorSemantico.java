@@ -74,47 +74,39 @@ public class analizadorSemantico {
 
     }
 
+    //Que los condicionales y ciclos revisen los tipos de sus expresiones.
+    public boolean revisarVariablesCondicionales()
+    {
+        //requiere recorrido de la tabla de símbolos
+        return true;
+    }
 
-/*
-    public void revisarAsignaciones() {
+    // métodos deben ser llamados con los parámetros de tipo adecuado
+    public boolean revisarParametros(List<Item> parametrosFuncion,List<Item> LlamadoParam) {
+        boolean bool = false;
+        if (parametrosFuncion.size() != LlamadoParam.size()) return bool;
+        else if(parametrosFuncion.size() == LlamadoParam.size()){
+            int i = 0;
+            while (i <= parametrosFuncion.size()) {
+                    Token paramF = (Token) parametrosFuncion.get(i);
+                    Token paramL = (Token) LlamadoParam.get(i);
 
-
-               List<Node<Regla>> reglas = this.estructuraArbol.getInDepthTraversal(this.estructuraArbol.getArbol());
-           for (int i=0; i<reglas.size(); i++){
-               Regla reglaActual = reglas.get(i).getLabel();
-               if (reglaActual.getNombre().equals("Asignacion")){
-                   List<Token> tokens = reglaActual.getTokens();
-                   TipoTokenTerminal tipo = (TipoTokenTerminal)tokens.get(0).getTipo();
-                   if (tipo.equals(TipoTokenTerminal.NUMERO)){
-                   }
-               }
-           }
-
-
-        for (Regla asign : this.estructuraArbol.getAsignaciones()) {
-            String id = asign.getNombre();
-
-            Tipo tipo = getTipoIdentificador(id);
-            if (tipo != null && tipo instanceof NumeroTipo) {
-                if (!(exp instanceof NumEntero || exp instanceof OperacionResta || exp instanceof OperacionMultiplicacion || exp instanceof OperacionDivision || exp instanceof OperacionSuma)) {
-                    error(TipoError.ASIGNACION_TIPO_INCORRECTA, tipo);
-                }
-            } else if (tipo != null && tipo instanceof BooleanoTipo) {
-                if (!(exp instanceof Falso || exp instanceof Verdadero)) {
-                    error(TipoError.ASIGNACION_TIPO_INCORRECTA, tipo);
-                }
-            } else if (tipo != null && tipo instanceof TextoTipo) {
-                if (!(exp instanceof Texto)) {
-                    error(TipoError.ASIGNACION_TIPO_INCORRECTA, tipo);
-                }
-            } else if (tipo != null && tipo instanceof CaracterTipo) {
-                if (!(exp instanceof Car)) {
-                    error(TipoError.ASIGNACION_TIPO_INCORRECTA, tipo);
+                    if(paramF.getTipoToken() == paramL.getTipoToken())
+                    {
+                        bool = true;
+                        i++; //tokens iguales, sigo buscando si los demás también son iguales
+                    }
+                    else if(paramF.getTipoToken() != paramL.getTipoToken())
+                    {
+                        bool = false;
+                        System.out.println("revision de parámetros dio: " + bool);
+                        return bool;
+                    }
                 }
             }
-        }
+            System.out.println("revision de parámetros dio: " + bool);
+            return bool;
     }
-*/
 
     private Object getTipoIdentificador(String name) {
         for (Regla dec : declaracionesVar) {

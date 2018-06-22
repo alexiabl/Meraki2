@@ -1,6 +1,8 @@
 package automatas.meraki.analisisSemantico.Reglas;
 
 import automatas.meraki.analisisSemantico.Item;
+import automatas.meraki.analisisSemantico.TipoTokenTerminal;
+import automatas.meraki.analisisSemantico.Token;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -29,6 +31,12 @@ public class Funcion implements Regla {
     public List<Item> getParam() {return this.listaParametros;}
 
     public List<Item> getDev() {return this.listaDevuelva;}
+
+    public TipoTokenTerminal devolucion()
+    {
+        Token t = (Token) listaDevuelva.get(listaDevuelva.size()-1);
+         return t.getTipoToken();
+    }
 
     public List<Item> getTokens() {
         return tokens;
