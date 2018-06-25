@@ -30,8 +30,8 @@ public Token(TipoTokenTerminal tipoTokenTerminal, int numLinea, int numFinal,Tip
     }
 
 
-    public Object getTipo() {
-        return this.tipoToken;
+    public Tipo getTipo() {
+        return this.valor;
     }
 
     public int getNumLinea() {
@@ -62,8 +62,8 @@ public Token(TipoTokenTerminal tipoTokenTerminal, int numLinea, int numFinal,Tip
         return this.valor;
     }
 
-    public String getValorReal() {
-        return this.valor.getValorR();
+    public Object getValorReal() {
+        return this.valor;
     }
 
     public void setValor(Tipo valor) {

@@ -1,19 +1,21 @@
 package automatas.meraki.analisisSemantico.Tipos;
 
 import automatas.meraki.analisisSemantico.Expresion;
+import automatas.meraki.analisisSemantico.TipoTokenTerminal;
 
 /**
  * Created by alexiaborchgrevink on 6/14/18.
  */
-public class NumEntero extends NumeroTipo {
+public class NumEntero extends Tipo {
 
-    private int valor;
+    public int valor;
+    private TipoTokenTerminal tipoReal = TipoTokenTerminal.NUMERO;
 
     public NumEntero(int val) {
         this.valor = val;
     }
 
-    public int getValor() {
+    public Object getValorReal() {
         return valor;
     }
 
@@ -25,7 +27,9 @@ public class NumEntero extends NumeroTipo {
         return super.getIdentificador();
     }
 
-    public String getValorR() {
-        return "T";
+    public TipoTokenTerminal getTipoReal() {
+        return this.tipoReal;
     }
+
+
 }

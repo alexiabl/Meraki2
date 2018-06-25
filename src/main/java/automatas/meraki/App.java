@@ -8,6 +8,7 @@ import automatas.meraki.analisisSemantico.Reglas.*;
 import automatas.meraki.analisisSemantico.TipoTokenTerminal;
 import automatas.meraki.analisisSemantico.Tipos.*;
 import automatas.meraki.analisisSemantico.Token;
+import automatas.meraki.analisisSemantico.analizadorSemantico;
 
 
 import java.util.LinkedList;
@@ -22,13 +23,12 @@ public class App {
 
         //Inicio Funcion
         Item tok1 = new Token(TipoTokenTerminal.TIPONUM, 1, new NumeroTipo()); //TKF
-        Item tok2 = new Token(TipoTokenTerminal.N_VAR, 1, new Texto("fibonacci")); //TKG
+        Item tok2 = new Token(TipoTokenTerminal.N_FUNC, 1, new Texto("fibonacci")); //TKG
         Token tok3 = new Token(TipoTokenTerminal.PI, 1, new Car('(')); //TKF
-
         Regla regla1 = new Parametros("Parametros"); //TKF
         //Inicio Llamado
         Token tok4 = new Token(TipoTokenTerminal.TIPONUM, 1, new NumeroTipo());
-        Token tok5 = new Token(TipoTokenTerminal.N_VAR, 1, new Texto("n"));
+        Token tok5 = new Token(TipoTokenTerminal.N_VAR, 1, new Variable("n"));
         List<Item> tokensReglaParametros = new LinkedList<Item>();
         tokensReglaParametros.add(tok4);
         tokensReglaParametros.add(tok5);
@@ -44,7 +44,7 @@ public class App {
         Regla condicion = new Condicion("Condicion");
                 //Condicion1
         Regla condicion1 =  new Igual("Igual");
-        Token tok31 = new Token(TipoTokenTerminal.N_VAR,2,new Texto("n"));
+        Token tok31 = new Token(TipoTokenTerminal.N_VAR, 2, new Variable("n"));
         Token tok28 = new Token(TipoTokenTerminal.NUMERO,2,new NumEntero(0));
         List<Item> tokensReglaCondicion1 = new LinkedList<Item>();
         tokensReglaCondicion1.add(tok31);
@@ -52,7 +52,7 @@ public class App {
         condicion1.setTokens(tokensReglaCondicion1);
             //Condicion2
         Regla condicion2 =  new Igual("Igual");
-        Token tok29 = new Token(TipoTokenTerminal.N_VAR,2,new Texto("n"));
+        Token tok29 = new Token(TipoTokenTerminal.N_VAR, 2, new Variable("n"));
         Token tok30 = new Token(TipoTokenTerminal.NUMERO,2,new NumEntero(1));
         List<Item> tokensReglaCondicion2 = new LinkedList<Item>();
         tokensReglaCondicion2.add(tok29);
@@ -70,7 +70,7 @@ public class App {
         //Inicio Devuelva
         Regla regla3 = new Devuelva("Devuelva");
         Token tok10 =  new Token(TipoTokenTerminal.DEVUELVA,3, 3,new Texto("Devuelva"));
-        Token tok11 = new Token(TipoTokenTerminal.N_VAR, 3, new Texto("n"));
+        Token tok11 = new Token(TipoTokenTerminal.N_VAR, 3, new Variable("n"));
         List<Item> tokensReglaDevuelva1 = new LinkedList<Item>();
         tokensReglaDevuelva1.add(tok10);
         tokensReglaDevuelva1.add(tok11);
@@ -96,9 +96,15 @@ public class App {
         tokensReglaSino.add(tok14);
 
         //Inicio asignacion1 dentro de sino
+        List<Item> tokensAsignacion = new LinkedList<Item>();
         Item tok15 = new Token(TipoTokenTerminal.TIPONUM, 6, new NumeroTipo());
-        Item tok16 = new Token(TipoTokenTerminal.N_VAR, 6, new Texto("a"));
+        Item tok16 = new Token(TipoTokenTerminal.N_VAR, 6, new Variable("a"));
         Item tok17 = new Token(TipoTokenTerminal.SIGUAL, 6, new Car('='));
+        tokensAsignacion.add(tok15);
+        tokensAsignacion.add(tok16);
+        tokensAsignacion.add(tok17);
+        Regla asignacion1 = new Asignacion("Asignacion");
+        asignacion1.setTokens(tokensAsignacion);
         Regla regla5 = new OperacionResta("OperacionResta");
         Item tokRegla1 = new Token(TipoTokenTerminal.N_VAR, 6, new Texto("n"));
         Item tokRegla2 = new Token(TipoTokenTerminal.NUMERO, 6, new NumEntero(2));
@@ -106,21 +112,15 @@ public class App {
         tokensReglaOperacionS.add(tokRegla1);
         tokensReglaOperacionS.add(tokRegla2);
         regla5.setTokens(tokensReglaOperacionS);
-
-        List<Item> tokensAsignacion = new LinkedList<Item>();
-        tokensAsignacion.add(tok15);
-        tokensAsignacion.add(tok16);
-        tokensAsignacion.add(tok17);
         tokensAsignacion.add(regla5);
-        Regla asignacion1 = new Asignacion("Asignacion");
-        asignacion1.setTokens(tokensAsignacion);
+
 
         //Inicio asignacion2 dentro de sino
         Item tok18 = new Token(TipoTokenTerminal.TIPONUM, 7, new NumeroTipo());
-        Item tok19 = new Token(TipoTokenTerminal.N_VAR, 7, new Texto("b"));
+        Item tok19 = new Token(TipoTokenTerminal.N_VAR, 7, new Variable("b"));
         Item tok20 = new Token(TipoTokenTerminal.SIGUAL, 7, new Car('='));
         Regla regla6 = new OperacionResta("OperacionResta");
-        Item tokRegla3 = new Token(TipoTokenTerminal.N_VAR, 7, new Texto("n"));
+        Item tokRegla3 = new Token(TipoTokenTerminal.N_VAR, 7, new Variable("n"));
         Item tokRegla4 = new Token(TipoTokenTerminal.NUMERO, 7, new NumEntero(1));
         List<Item> tokensReglaOperacionR = new LinkedList<Item>();
         tokensReglaOperacionR.add(tokRegla3);
@@ -137,13 +137,13 @@ public class App {
 
         //Inicio asignacion3 dentro de sino
         Item tok21 = new Token(TipoTokenTerminal.TIPONUM, 8, new NumeroTipo());
-        Item tok22 = new Token(TipoTokenTerminal.N_VAR, 8, new Texto("r"));
+        Item tok22 = new Token(TipoTokenTerminal.N_VAR, 8, new Variable("r"));
         Item tok23 = new Token(TipoTokenTerminal.SIGUAL, 8, new Car('='));
         //Inicio suma de asignacion
         Regla regla7 = new OperacionSuma("OperacionSuma");
 
         Regla regla8 = new Llamado("Llamado");
-        Item tokRegla5 = new Token(TipoTokenTerminal.N_VAR, 8, new Texto("fibonacci"));
+        Item tokRegla5 = new Token(TipoTokenTerminal.N_FUNC, 8, new Texto("fibonacci"));
         Item tokRegla6 = new Token(TipoTokenTerminal.TIPONUM, 8, new Texto("a"));
         List<Item> tokensReglaLlamado1 = new LinkedList<Item>();
         tokensReglaLlamado1.add(tokRegla5);
@@ -151,7 +151,7 @@ public class App {
         regla8.setTokens(tokensReglaLlamado1);
 
         Regla regla9 = new Llamado("Llamado");
-        Item tokRegla7 = new Token(TipoTokenTerminal.N_VAR, 8, new Texto("fibonacci"));
+        Item tokRegla7 = new Token(TipoTokenTerminal.N_FUNC, 8, new Texto("fibonacci"));
         Item tokRegla8 = new Token(TipoTokenTerminal.TIPONUM, 8, new Texto("b"));
         List<Item> tokensReglaLlamado2 = new LinkedList<Item>();
         tokensReglaLlamado2.add(tokRegla7);
@@ -175,7 +175,7 @@ public class App {
         //Inicio Devuelva en Sino
         Regla regla11 = new Devuelva("Devuelva");
         Token tok26 =  new Token(TipoTokenTerminal.DEVUELVA,9, new Texto("Devuelva"));
-        Token tok27 = new Token(TipoTokenTerminal.N_VAR, 9, new Texto("r"));
+        Token tok27 = new Token(TipoTokenTerminal.N_VAR, 9, new Variable("r"));
         List<Item> tokensReglaDevuelva2 = new LinkedList<Item>();
         tokensReglaDevuelva2.add(tok26);
         tokensReglaDevuelva2.add(tok27);
@@ -194,7 +194,7 @@ public class App {
         //
 
         Token tok25 = new Token(TipoTokenTerminal.LLAVEF, 11, new Car('}')); //tkf
-        Regla funcion = new Funcion("Funcion");
+        Regla funcion = new Funcion("Funcion fibonacci");
         List<Item> tokensFuncion = new LinkedList<Item>();
         tokensFuncion.add(tok1);
         tokensFuncion.add(tok2);
@@ -217,7 +217,7 @@ public class App {
         Token tok39 = new Token(TipoTokenTerminal.LLAVEF, 14, new Car('}'));
             //Llamado
         Regla llamado = new Llamado("Llamado");
-        Item tokRegla14 = new Token(TipoTokenTerminal.N_VAR, 13, new Texto("fibonacci"));
+        Item tokRegla14 = new Token(TipoTokenTerminal.N_FUNC, 13, new Texto("fibonacci"));
         Item tokRegla15 = new Token(TipoTokenTerminal.NUMERO, 13, new NumEntero(5));
         List<Item> tokensReglaLlamado3 = new LinkedList<Item>();
         tokensReglaLlamado3.add(tokRegla14);
@@ -248,6 +248,8 @@ public class App {
         arbolSemantico.imprimirTablaSimbolosFunciones();
 
         Token tok40 = new Token(TipoTokenTerminal.LLAVEF, 11, new Car('.')); //tkf
+        analizadorSemantico semantico = new analizadorSemantico(arbolSemantico);
+        semantico.revisarDevoluciones(arbolSemantico.getFunciones());
 
 
         /*

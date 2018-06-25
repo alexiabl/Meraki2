@@ -16,9 +16,6 @@ public class Terminal extends Token {
         super(tipoTokenTerminal, numLinea, valor);
     }
 
-    public Object getTipo() {
-        return this.tipoToken;
-    }
 
     public int getNumLinea() {
         return this.numLinea;

@@ -1,25 +1,26 @@
 package automatas.meraki.analisisSemantico.Tipos;
 
+import automatas.meraki.analisisSemantico.TipoTokenTerminal;
+
 /**
  * Created by alexiaborchgrevink on 6/14/18.
  */
-public class Texto extends TextoTipo {
+public class Texto extends Tipo {
 
-    private String valor;
+    public String valor;
+    private TipoTokenTerminal tipoReal = TipoTokenTerminal.TEXTO;
 
     public Texto(String val) {
         this.valor = val;
     }
 
-    public String getValor() {
-        return valor;
+    public String getValorReal() {
+        return this.valor;
     }
 
     public String getIdentificador() {
         return super.getIdentificador();
     }
 
-    public String getValorR() {
-        return this.valor;
-    }
+
 }

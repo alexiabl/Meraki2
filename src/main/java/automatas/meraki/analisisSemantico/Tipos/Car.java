@@ -1,17 +1,20 @@
 package automatas.meraki.analisisSemantico.Tipos;
 
+import automatas.meraki.analisisSemantico.TipoTokenTerminal;
+
 /**
  * Created by alexiaborchgrevink on 6/14/18.
  */
-public class Car extends CaracterTipo {
+public class Car extends Tipo {
 
-    private char valor;
+    public char valor;
+    private TipoTokenTerminal tipoReal = TipoTokenTerminal.CARACTER;
 
     public Car(char val) {
         this.valor = val;
     }
 
-    public char getValor() {
+    public Object getValorReal() {
         return valor;
     }
 
@@ -19,7 +22,4 @@ public class Car extends CaracterTipo {
         return super.getIdentificador();
     }
 
-    public String getValorR() {
-        return "T";
-    }
 }

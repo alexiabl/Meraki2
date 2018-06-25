@@ -59,17 +59,22 @@ public class EstructuraArbol {
         Node<Regla> nodoActual = this.nodoActual;
         Regla reglaNodo = new Asignacion(regla.getIdentificador());
 
-        if (regla instanceof Asignacion || regla instanceof Declaracion) {
+        if (regla instanceof Asignacion) {
             Token tokenTipo = (Token) regla.getTokens().get(0);
-            Token tokenVar = (Token) regla.getTokens().get(1);
+            if (regla.getTokens().get(1) instanceof Token) {
+                Token tokenVar = (Token) regla.getTokens().get(1);
+                //this.analizadorSemantico.verificarTipos(tokenTipo.getTipoToken(),tokenVar.getTipoToken());
+                Token tokenTabla = new Token(tokenTipo.getTipoToken(), tokenTipo.getNumLinea(), tokenVar.getValor());
+                this.tablaSimbolos.insertarATabla(tokenTabla);
+            }
+            this.asignaciones.add(regla);
+            //hay que revisar si lo que esta al otro lado de la asignacion es una regla (ej. operacion)
 
             //problemas para enviar tercer token y verificar el tipo
             // ejemplo numero n = 5; ocupo llegar a 5 para ver su tipo, que debe ser numero
-            this.analizadorSemantico.verificarTipos(tokenTipo.getTipoToken(),tokenVar.getTipoToken());
 
-            Token tokenTabla = new Token(tokenTipo.getTipoToken(), tokenTipo.getNumLinea(), tokenVar.getValor());
-            this.tablaSimbolos.insertarATabla(tokenTabla);
-
+        } else if (regla instanceof Declaracion) {
+            this.declaraciones.add(regla);
         } else if (regla instanceof Funcion) {
             Token tokenTipo = (Token) regla.getTokens().get(0);
             Token fin = (Token)regla.getTokens().get(regla.getTokens().size()-1);
@@ -77,15 +82,9 @@ public class EstructuraArbol {
             Token tokenVar = (Token) regla.getTokens().get(1);
             Token tokenTabla = new Token(tokenTipo.getTipoToken(), tokenTipo.getNumLinea(), tokenTipo.getNumLineaFinal(), tokenVar.getValor());
             this.tablaFunciones.insertarATabla(tokenTabla);
+            this.funciones.add(regla);
 
-            //problemas para encontrar el token que se necesita, similar al problema de arriba
-            List<Item> devolucion = ((Funcion) regla).getDev();
-            Token tok = (Token) devolucion.get(1);
 
-            System.out.println("devolución: "+ ((Funcion) regla).devolucion());
-            TipoTokenTerminal n = buscarTipo(tok);
-
-            this.analizadorSemantico.revisarDevoluciones(tok.getTipoToken(),tokenTipo.getTipoToken());
 
         } else if (regla instanceof Parametros && regla != null) {
             Token tokenTipo = (Token) regla.getTokens().get(0);
@@ -168,12 +167,11 @@ public class EstructuraArbol {
         System.out.println("Tabla de Simbolos:");
         for (int i = 0; i < tablaAsig.size(); i++) {                                                                      //OBTENER VALOR REAL de token
             if (tablaAsig.get(i).getNumLineaFinal() != 0) {
-                System.out.println("Función Tipo: " + tablaAsig.get(i).getTipoToken() + " Valor: " + tablaAsig.get(i).getValorReal() + " Linea Inicial: " + tablaAsig.get(i).getNumLinea() + " Linea Final: " + tablaAsig.get(i).getNumLineaFinal());
+                System.out.println("Función Tipo: " + tablaAsig.get(i).getTipoToken() + " Valor: " + tablaAsig.get(i).getValor().getValorReal() + " Linea Inicial: " + tablaAsig.get(i).getNumLinea() + " Linea Final: " + tablaAsig.get(i).getNumLineaFinal());
             } else {
-                System.out.println("Variable Tipo: " + tablaAsig.get(i).getTipoToken() + " Valor: " + tablaAsig.get(i).getValorReal() + " Linea: " + tablaAsig.get(i).getNumLinea());
+                System.out.println("Variable Tipo: " + tablaAsig.get(i).getTipoToken() + " Valor: " + tablaAsig.get(i).getValor().getValorReal() + " Linea: " + tablaAsig.get(i).getNumLinea());
 
             }
-
         }
     }
 
@@ -243,7 +241,7 @@ public class EstructuraArbol {
     }
 
     public TablaSimbolos getTablaSimbolos() {
-        return tablaSimbolos;
+        return this.tablaSimbolos;
     }
 
     public void setTablaSimbolos(TablaSimbolos tablaSimbolos) {
@@ -259,7 +257,7 @@ public class EstructuraArbol {
     }
 
     public List<Regla> getFunciones() {
-        return funciones;
+        return this.funciones;
     }
 
     public void setFunciones(List<Regla> funciones) {
@@ -267,7 +265,7 @@ public class EstructuraArbol {
     }
 
     public List<Regla> getDeclaraciones() {
-        return declaraciones;
+        return this.declaraciones;
     }
 
     public void setDeclaraciones(List<Regla> declaraciones) {

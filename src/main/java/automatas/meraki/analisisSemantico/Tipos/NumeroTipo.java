@@ -1,9 +1,11 @@
 package automatas.meraki.analisisSemantico.Tipos;
 
+import automatas.meraki.analisisSemantico.TipoTokenTerminal;
+
 /**
  * Created by alexiaborchgrevink on 6/14/18.
  */
-public class NumeroTipo implements Tipo {
+public class NumeroTipo extends Tipo {
 
     private static String identificador = "NUMERO";
 
@@ -15,7 +17,7 @@ public class NumeroTipo implements Tipo {
         return this.identificador;
     }
 
-    public String getValorR() {
-        return "T";
+    public TipoTokenTerminal getTipoReal() {
+        return TipoTokenTerminal.NUMERO;
     }
 }

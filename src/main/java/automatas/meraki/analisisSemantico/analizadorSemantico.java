@@ -1,7 +1,10 @@
 package automatas.meraki.analisisSemantico;
 
 import automatas.meraki.EstructuraArbol;
+import automatas.meraki.analisisSemantico.Reglas.Funcion;
 import automatas.meraki.analisisSemantico.Reglas.Regla;
+import automatas.meraki.analisisSemantico.Tipos.Tipo;
+import automatas.meraki.analisisSemantico.Tipos.Variable;
 
 import java.util.List;
 
@@ -45,13 +48,13 @@ public class analizadorSemantico {
             tipoCorrecto = true;
         } else if (tok0 == TIPOTEXTO && tok3 == TEXTO) {
             tipoCorrecto = true;
-        } else if (tok0== TIPOCAR && tok3 == CARACTER) {
+        } else if (tok0 == TIPOCAR && tok3 == CARACTER) {
             tipoCorrecto = true;
         } else if (tok0 == TIPOBOOL && (tok3 == VERDADERO || tok3 == FALSO)) {
             tipoCorrecto = true;
         } else {
             System.out.println("tipos diferentes " + tok0 + " y " + tok3);
-            System.out.println("Mae, esa asignacion esta incorrecta, fijate en el tipo: ");
+            System.out.println("Mae, esta asignacion: " + tok0 + "=" + tok3 + ", esta incorrecta, fijate en el tipo: ");
         }
         if (tipoCorrecto) {
             System.out.println("tipos iguales " + tok0 + " y " + tok3);
@@ -59,20 +62,37 @@ public class analizadorSemantico {
         return tipoCorrecto;
     }
 
-    public boolean revisarDevoluciones( TipoTokenTerminal devolucion, TipoTokenTerminal original) //devolver el tipo de dato que indican
-    {
 
-        if(original == devolucion)
-        {
-            System.out.println("tipos iguales " + devolucion + " y " + original);
-            return true;
-        } else {
-            System.out.println("tipos diferentes " + devolucion + " y " + original);
-            System.out.println("Oh no! Esto no es lo que deberia devolver: " + original);
-            return false;
+    public void revisarDevoluciones(List<Regla> funciones) {
+        for (int i = 0; i < this.funciones.size(); i++) {
+            Regla funcionActual = this.funciones.get(i);
+            List<Item> devolucion = ((Funcion) funcionActual).getDev();
+            Token tok = (Token) devolucion.get(1);
+
+            //si devuelve una variable se debe ir a revisar la tabla de simbolos para revisar el tipo de la variable
+            if (tok.getTipoToken().equals(TipoTokenTerminal.N_VAR)) {
+                Variable nombreVar = (Variable) tok.getTipo();
+                TipoTokenTerminal tipoVariable = getTipoVariableDeTabla(nombreVar.nVariable);
+                Token tokenDevolucionTipo = (Token) funcionActual.getTokens().get(0);
+                if (tipoVariable != tokenDevolucionTipo.getTipoToken()) {
+                    System.out.println("Mae, la funcion: " + funcionActual.getIdentificador() + " en la linea: " + ((Token) funcionActual.getTokens().get(0)).getNumLinea() + " tiene devolucion incorrecta, devolucion esperada: " + tokenDevolucionTipo.getTipoToken());
+                }
+            }
         }
-
     }
+
+    public TipoTokenTerminal getTipoVariableDeTabla(String nombreVariable) {
+        TipoTokenTerminal tipoVariable = null;
+        for (int i = 0; i < this.estructuraArbol.getTablaSimbolos().getTabla().size(); i++) {
+            Token tokenActual = this.estructuraArbol.getTablaSimbolos().getTabla().get(i);
+            Variable var = (Variable) tokenActual.getValor();
+            if (var.nVariable.equals(nombreVariable)) {
+                tipoVariable = tokenActual.getTipoToken();
+            }
+        }
+        return tipoVariable;
+    }
+
 
     //Que los condicionales y ciclos revisen los tipos de sus expresiones.
     public boolean revisarVariablesCondicionales()
