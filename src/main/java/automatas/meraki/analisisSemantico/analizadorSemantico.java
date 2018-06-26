@@ -63,7 +63,7 @@ public class analizadorSemantico {
     }
 
 
-    public void revisarDevoluciones(List<Regla> funciones) {
+    public void revisarDevoluciones() {
         for (int i = 0; i < this.funciones.size(); i++) {
             Regla funcionActual = this.funciones.get(i);
             List<Item> devolucion = ((Funcion) funcionActual).getDev();
@@ -75,8 +75,25 @@ public class analizadorSemantico {
                 TipoTokenTerminal tipoVariable = getTipoVariableDeTabla(nombreVar.nVariable);
                 Token tokenDevolucionTipo = (Token) funcionActual.getTokens().get(0);
                 if (tipoVariable != tokenDevolucionTipo.getTipoToken()) {
-                    System.out.println("Mae, la funcion: " + funcionActual.getIdentificador() + " en la linea: " + ((Token) funcionActual.getTokens().get(0)).getNumLinea() + " tiene devolucion incorrecta, devolucion esperada: " + tokenDevolucionTipo.getTipoToken());
+                    System.out.println("Mae, la funcion: " + funcionActual.getIdentificador() + " en la linea: " + ((Token) funcionActual.getTokens().get(0)).getNumLinea() + " tiene devolucion incorrecta, la devolucion esperada es: " + tokenDevolucionTipo.getTipoToken());
                 }
+            }
+        }
+    }
+
+    public void revisarAsignaciones() {
+        for (int i = 0; i < this.asignaciones.size(); i++) {
+            Regla asignacionActual = this.asignaciones.get(i);
+            Token tokenTipo = (Token) asignacionActual.getTokens().get(0);
+            //Token tokenVar = (Token)asignacionActual.getTokens().get(1);
+            if (asignacionActual.getTokens().get(3) instanceof Regla) {
+                //evaluar la operacion
+            } else {
+                Token tokenAsig = (Token) asignacionActual.getTokens().get(3);
+                if (tokenAsig.getTipo().getTipoReal() != tokenTipo.getTipoToken()) {
+                    System.out.println("Mae, esa asignacion esta incorrecta, fijate en el tipo");
+                }
+
             }
         }
     }

@@ -45,6 +45,10 @@ public class OperacionDivision implements Regla {
         this.expresiones = new LinkedList<Item>();
     }
 
+    public Tipo evaluarOperacion() {
+        return null;
+    }
+
     public List<Item> getTokens() {
         return tokens;
     }

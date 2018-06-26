@@ -249,7 +249,8 @@ public class App {
 
         Token tok40 = new Token(TipoTokenTerminal.LLAVEF, 11, new Car('.')); //tkf
         analizadorSemantico semantico = new analizadorSemantico(arbolSemantico);
-        semantico.revisarDevoluciones(arbolSemantico.getFunciones());
+        semantico.revisarDevoluciones();
+        semantico.revisarAsignaciones();
 
 
         /*
