@@ -16,8 +16,6 @@ import automatas.meraki.analisisSemantico.analizadorSemantico;
 import java.util.LinkedList;
 import java.util.List;
 
-import static automatas.meraki.analisisSemantico.TipoTokenTerminal.*;
-
 public class EstructuraArbol {
 
     private PointerTree<Regla> arbol;
@@ -186,7 +184,7 @@ public class EstructuraArbol {
     }
 
 
-    public static <T> List<Node<T>> getLevelTraversal(Tree<T> tree) {
+    public <T> List<Node<T>> getLevelTraversal(Tree<T> tree) {
         ArrayQueue<T> q = new ArrayQueue<T>(tree.getRoot().getChildren().size());
         List<Node<T>> list = new LinkedList<Node<T>>();
         Node current = tree.getRoot();
@@ -216,7 +214,7 @@ public class EstructuraArbol {
         return list;
     }
 
-    public static <T> List<Node<T>> getInDepthTraversal(Tree<T> tree) {
+    public <T> List<Node<T>> getInDepthTraversal(Tree<T> tree) {
         List<Node<T>> list = new LinkedList<Node<T>>();
         Node<T> current = tree.getRoot();
         list.add(current);

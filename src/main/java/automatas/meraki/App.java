@@ -14,9 +14,7 @@ import automatas.meraki.analisisSemantico.analizadorSemantico;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Hello world!
- */
+
 public class App {
     public static void main(String[] args) {
 
@@ -251,6 +249,8 @@ public class App {
         analizadorSemantico semantico = new analizadorSemantico(arbolSemantico);
         semantico.revisarDevoluciones();
         semantico.revisarAsignaciones();
+        GeneradorCodigo generadorCodigo = new GeneradorCodigo(arbolSemantico);
+        generadorCodigo.generarCodigo();
 
 
         /*
