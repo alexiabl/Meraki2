@@ -214,6 +214,7 @@ public class EstructuraArbol {
         return list;
     }
 
+    /*
     public <T> List<Node<T>> getInDepthTraversal(Tree<T> tree) {
         List<Node<T>> list = new LinkedList<Node<T>>();
         Node<T> current = tree.getRoot();
@@ -236,6 +237,25 @@ public class EstructuraArbol {
             cont++;
         }
         return list;
+    }*/
+
+    public static <T> List<Node<T>> getInDepthTraversal(Tree<T> tree){
+        List<Node<T>> inDepth = null;
+        if(!tree.isEmpty()){
+            inDepth = new LinkedList<Node<T>>();
+            depthTraversal(inDepth, tree.getRoot());
+        }
+        return inDepth;
+    }
+
+
+    private static <T> void depthTraversal(List<Node<T>> list, Node<T> node){
+        list.add(node);
+        List<Node<T>> children = node.getChildren();
+        if(children != null){
+            for(int i = 0; i < children.size(); i++)
+                depthTraversal(list, children.get(i));
+        }
     }
 
     public TablaSimbolos getTablaSimbolos() {
